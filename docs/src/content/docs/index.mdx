@@ -1,0 +1,36 @@
+---
+title: json-reef
+description: "Optimize large JSON objects by resolving references and reducing redundancy, maintaining data consistency with minimal memory footprint."
+template: splash
+hero:
+  tagline: Efficiently manage JSON data with json-reef
+  actions:
+    - text: Getting Started
+      link: /guides/start/
+      icon: right-arrow
+      variant: primary
+    - text: Repository
+      link: https://github.com/hacomono-lib/json-reef
+      icon: github
+---
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Concepts
+
+<CardGrid>
+  <Card title="Efficient Data Optimization with Reference Resolution">
+    Utilizes $ref to efficiently process and reduce the size of JSON objects with redundant data.
+  </Card>
+
+  <Card title="Data Consistency and Primitive Value Support">
+    Ensures consistency across all referenced locations with automatic updates, including support for primitive values like strings and numbers.
+  </Card>
+
+  <Card title="Low-Cost API Optimization">
+    Enhances performance without major restructuring of existing REST APIs.
+  </Card>
+
+  <Card title="No Bundled Dependencies" >
+    Functions effectively without any bundled JavaScript libraries, ensuring lightweight integration.
+  </Card>
+</CardGrid>
