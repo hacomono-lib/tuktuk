@@ -1,5 +1,6 @@
 {
   "name": "tuktuk",
+  "description": "A flexible framework for fetching design data and outputting it in various design token formats.",
   "private": true,
   "repository": {
     "url": "https://github.com/hacomono-lib/tuktuk",
@@ -11,7 +12,7 @@
   "scripts": {
     "dev": "",
     "doc": "astro dev --root ./docs --open",
-    "build": "",
+    "build": "turbo run build",
     "test": "",
     "format": "biome format --write ./packages/*/src ./docs",
     "lint": "biome check --apply ./packages/*/src ./docs"
@@ -27,7 +28,9 @@
     "typescript": "^5.3.3"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "plugins/*",
+    "examples/*"
   ],
   "packageManager": "yarn@4.0.2",
   "volta": {

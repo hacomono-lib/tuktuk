@@ -1,0 +1,33 @@
+{
+  "name": "@tuktuk/core",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/hacomono-lib/tuktuk",
+    "type": "git",
+    "directory": "packages/cli"
+  },
+  "author": "mew-ton <mxl_usmarc@slmail.mewton.jp>",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "unbuild",
+    "test": ""
+  },
+  "dependencies": {
+    "consola": "^3.2.3",
+    "unbuild": "^2.0.0"
+  },
+  "volta": {
+    "node": "20.11.0",
+    "yarn": "4.0.2"
+  }
+}

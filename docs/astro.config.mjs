@@ -1,13 +1,13 @@
 import starlight from '@astrojs/starlight'
-// eslint-disable-next-line import/extensions
 import { defineConfig } from 'astro/config'
 
-export default defineConfig({
+// biome-ignore lint/style/noDefaultExport: <explanation>
+export  default defineConfig({
   integrations: [
     starlight({
-      title: 'json-reef',
+      title: 'tuktuk',
       social: {
-        github: 'https://github.com/hacomono-lib/json-reef',
+        github: 'https://github.com/hacomono-lib/tuktuk',
       },
       sidebar: [
         {
