@@ -4,10 +4,10 @@ import type { Config, ResultSet } from './type'
 export async function run(config: Config): Promise<ResultSet[]> {
   const context = await createContext(config)
 
-  const results = (await Promise.all(context.pipelines.map(async ({ fetch, transform }) => {
-    const result = await fetch(context.config)
+  const results = (await Promise.all(context.pipelines.map(async ({ fetch, fetchConfig, transform, transformConfig }) => {
+    const result = await fetch(fetchConfig)
 
-    return transform(result, context.config)
+    return transform(result, transformConfig)
   }))).flat()
 
   await Promise.all(results.map(write))

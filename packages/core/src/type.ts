@@ -8,8 +8,10 @@ export interface Pipeline {
   transform: TransformConfig | Transformer
 }
 
+export type ConfigBase = object & {}
+
 // biome-ignore lint/suspicious/noEmptyInterface: <explanation>
-export  interface FetchConfig { }
+export interface FetchConfig {}
 
 export interface TransformConfig {
   /**
@@ -27,9 +29,11 @@ export interface Context {
   pipelines: PipelineContext[]
 }
 
-interface PipelineContext {
-  fetch: Fetcher,
-  transform: Transformer,
+export interface PipelineContext<Fc extends ConfigBase = ConfigBase, Tc extends ConfigBase = ConfigBase> {
+  fetch: Fetcher<Fc>
+  fetchConfig: Fc
+  transform: Transformer<Tc>
+  transformConfig: Tc
 }
 
 type Primitive = string | number
@@ -51,25 +55,41 @@ export interface Result {
 
 export type ResultSet = Result | Result[]
 
-export type Fetcher = (config: Config) => FetchResult | Promise<FetchResult>
+export type Fetcher<C extends ConfigBase = ConfigBase> = (config: C) => FetchResult | Promise<FetchResult>
 
 export function defineFetcher<F extends Fetcher>(fetcher: F): F {
   return fetcher
 }
 
-export type Transformer = (fetchResult: FetchResult, config: Config) => ResultSet | Promise<ResultSet[]>
+export type Transformer<C extends ConfigBase = ConfigBase> = (
+  fetchResult: FetchResult,
+  config: C,
+) => ResultSet | Promise<ResultSet[]>
 
 export function defineTransformer<T extends Transformer>(transformer: T): T {
   return transformer
 }
 
-export interface Plugin {
+export type Plugin = FetcherPlugin | TransformerPlugin
+
+export interface FetcherPlugin<C extends ConfigBase = ConfigBase> {
   name: string
-  type: 'fetch' | 'transform'
-  fetch?: Fetcher
-  transform?: Transformer
+  type: 'fetch'
+  fetch: Fetcher<C>
+  transform?: never
 }
 
-export function definePlugin<P extends Plugin>(plugin: P): P {
+export interface TransformerPlugin<C extends ConfigBase = ConfigBase> {
+  name: string
+  type: 'transform'
+  fetch?: never
+  transform: Transformer<C>
+}
+
+export function definePlugin<C extends ConfigBase, P extends FetcherPlugin<C> = FetcherPlugin<C>>(plugin: P): P
+
+export function definePlugin<C extends ConfigBase, P extends TransformerPlugin<C> = TransformerPlugin<C>>(plugin: P): P
+
+export function definePlugin(plugin: Plugin): Plugin {
   return plugin
 }

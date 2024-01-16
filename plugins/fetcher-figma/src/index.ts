@@ -14,11 +14,12 @@ declare module '@tuktuk/core' {
 }
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
-export default definePlugin({
+export default definePlugin<FigmaFetchConfig>({
   name: PLUGIN_KEY,
   type: 'fetch',
   fetch: (config) => {
     console.log('figma fetcher')
+    console.log(config)
     return { values: [] }
   }
 })

@@ -14,11 +14,13 @@ declare module '@tuktuk/core' {
 }
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
-export default definePlugin({
+export default definePlugin<W3cTransformConfig>({
   name: 'w3c',
   type: 'transform',
-  transform: (config, context) => {
+  transform: (values, config) => {
     console.log('w3c transformer')
+    console.log(values)
+    console.log(config)
     return []
   },
 })

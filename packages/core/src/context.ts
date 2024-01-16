@@ -1,25 +1,29 @@
-import type { Config, Context, FetchConfig, Fetcher, Plugin, Transformer } from './type'
+import type {
+  Config,
+  ConfigBase,
+  Context,
+  FetchConfig,
+  Fetcher,
+  FetcherPlugin,
+  PipelineContext,
+  Plugin,
+  Transformer,
+  TransformerPlugin
+} from './type'
 
 export async function createContext(config: Config): Promise<Context> {
   const { fetchers, transformers } = await loadPlugins(config)
 
   const pipelines = config.pipelines.map(({ fetch, transform }) => {
-    const fixedFetch = typeof fetch === 'function' ? fetch as Fetcher : findFetcher(fetch, fetchers)
-
-    if (!fixedFetch) {
-      throw new Error('Fetcher not found')
-    }
-
-    const fixedTransform = typeof transform === 'function' ? transform as Transformer : findTransformer(transform, transformers)
-
-    if (!fixedTransform) {
-      throw new Error('Transformer not found')
-    }
+    const { fetcher, fetchConfig } = findFetcher(fetch, fetchers)
+    const { transformer, transformConfig } = findTransformer(transform, transformers)
 
     return {
-      fetch: fixedFetch,
-      transform: fixedTransform,
-    }
+      fetch: fetcher,
+      fetchConfig: fetchConfig as ConfigBase,
+      transform: transformer,
+      transformConfig: transformConfig as ConfigBase,
+    } satisfies PipelineContext
   })
 
   return freeze({
@@ -28,24 +32,60 @@ export async function createContext(config: Config): Promise<Context> {
   })
 }
 
-function findFetcher(config: FetchConfig, fetchers: Map<string, Fetcher>): Fetcher | undefined {
+function findFetcher(
+  config: FetchConfig | Fetcher,
+  fetchers: Map<string, Fetcher>,
+): { fetcher: Fetcher; fetchConfig: FetchConfig } {
+  if (typeof config === 'function') {
+    return { fetcher: config as Fetcher, fetchConfig: {} }
+  }
+
   const keys = Array.from(fetchers.keys())
   for (const key of keys) {
     if (key in config) {
-      return fetchers.get(key)
+      const fetch = fetchers.get(key)
+
+      if (!fetch) {
+        continue
+      }
+
+      return {
+        fetcher: fetch,
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        fetchConfig: (config as any)[key],
+      }
     }
   }
-  return undefined
+
+  throw new Error('Fetcher not found')
 }
 
-function findTransformer(config: FetchConfig, transformers: Map<string, Transformer>): Transformer | undefined {
+function findTransformer(
+  config: FetchConfig,
+  transformers: Map<string, Transformer>,
+): { transformer: Transformer; transformConfig: FetchConfig } {
+  if (typeof config === 'function') {
+    return { transformer: config as Transformer, transformConfig: {} }
+  }
+
   const keys = Array.from(transformers.keys())
   for (const key of keys) {
     if (key in config) {
-      return transformers.get(key)
+      const transform = transformers.get(key)
+
+      if (!transform) {
+        continue
+      }
+
+      return {
+        transformer: transform,
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        transformConfig: (config as any)[key],
+      }
     }
   }
-  return undefined
+
+  throw new Error('Transformer not found')
 }
 
 function freeze<T>(target: T): T {
@@ -71,11 +111,11 @@ async function loadPlugins({ plugins = [] }: Config): Promise<LoadPluginsResult>
       return pluginName
     })()
 
-    if (p.type === 'fetch' && p.fetch) {
+    if (isFetcherPlugin(p)) {
       fetchers.set(p.name, p.fetch)
     }
 
-    if (p.type === 'transform' && p.transform) {
+    if (isTransformerPlugin(p)) {
       transformers.set(p.name, p.transform)
     }
   }
@@ -84,7 +124,7 @@ async function loadPlugins({ plugins = [] }: Config): Promise<LoadPluginsResult>
 }
 
 async function loadPlugin(name: string): Promise<Plugin> {
-  const { default: maybePlugin }= await import(name)
+  const { default: maybePlugin } = await import(name)
 
   if (!isPlugin(maybePlugin)) {
     throw new Error(`Plugin ${name} is not valid`)
@@ -100,4 +140,12 @@ function isPlugin(target: unknown): target is Plugin {
     'type' in target &&
     ((target.type === 'fetch' && 'fetch' in target) || (target.type === 'transform' && 'transform' in target))
   )
+}
+
+function isFetcherPlugin(target: Plugin): target is FetcherPlugin {
+  return target.type === 'fetch' && 'fetch' in target
+}
+
+function isTransformerPlugin(target: Plugin): target is TransformerPlugin {
+  return target.type === 'transform' && 'transform' in target
 }
