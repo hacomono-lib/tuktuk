@@ -5,10 +5,10 @@
   "scripts": {
     "prepare": "yarn build:css",
     "build": "yarn build:css && yarn build:js",
-    "build:css": "tailwindcss --input ./src/input.css --output ./src/output.css",
+    "build:css": "tailwindcss --input ./src/index.css --output ./build/index.css",
     "build:js": "build-figma-plugin --typecheck --minify",
     "dev": "yarn build:css && concurrently npm:watch:css npm:watch:js",
-    "dev:css": "tailwindcss --input ./src/input.css --output ./src/output.css --watch",
+    "dev:css": "tailwindcss --input ./src/index.css --output ./build/index.css --watch",
     "dev:js": "build-figma-plugin --typecheck --watch"
   },
   "dependencies": {

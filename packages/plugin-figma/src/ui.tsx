@@ -1,5 +1,9 @@
+import '!../build/index.css'
 import { render, useWindowResize } from '@create-figma-plugin/ui'
 import { emit } from '@create-figma-plugin/utilities'
+// biome-ignore lint/nursery/noUnusedImports: <explanation>
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
+import { h } from 'preact'
 import { EventName, type ResizeWindowHandler } from './types'
 
 function mainUi() {
