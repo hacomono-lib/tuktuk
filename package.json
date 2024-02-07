@@ -10,7 +10,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "",
+    "dev": "turbo run dev",
     "doc": "astro dev --root ./docs --open",
     "build": "turbo run build",
     "test": "",

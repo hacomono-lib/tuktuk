@@ -24,6 +24,7 @@
     "lineWidth": 120
   },
   "javascript": {
+    "globals": ["figma"],
     "formatter": {
       "enabled": true,
       "quoteStyle": "single",
