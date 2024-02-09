@@ -1,7 +1,7 @@
 import { emit, on, showUI } from '@create-figma-plugin/utilities'
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from './constants'
 import { loadLocalVariables } from './lib'
-import { EventName, type RequestCollectVariablesHandler, type ResizeWindowHandler, } from './types'
+import { EventName, type RequestCollectVariablesHandler, type ResizeWindowHandler } from './types'
 
 console.clear()
 

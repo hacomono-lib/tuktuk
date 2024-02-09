@@ -16,10 +16,10 @@ export type Value = Variable['valuesByMode'][string]
 export type ResolvedType = Variable['resolvedType']
 
 // biome-ignore lint/style/useNamingConvention: <explanation>
-type  RGB = Value & { r: number; g: number; b: number }
+type RGB = Value & { r: number; g: number; b: number }
 
 // biome-ignore lint/style/useNamingConvention: <explanation>
-type  RGBA = Value & { r: number; g: number; b: number; a: number }
+type RGBA = Value & { r: number; g: number; b: number; a: number }
 
 export type Color = (RGB | RGBA) & { a?: number }
 
@@ -32,5 +32,8 @@ export function isColor(value: Value): value is Color {
 export type VliableAlias = Value & { type: 'VARIABLE_ALIAS'; id: string }
 
 export function isValiableAlias(value: Value): value is VliableAlias {
-  return typeof value === 'object' && value !== null && !Array.isArray(value) && value.type === 'VARIABLE_ALIAS'
+  return (
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    typeof value === 'object' && value !== null && !Array.isArray(value) && (value as any).type === 'VARIABLE_ALIAS'
+  )
 }

@@ -1,14 +1,14 @@
 import '!../build/index.css'
 import { render, useWindowResize } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
-import { signal } from '@preact/signals'
+import { computed, signal } from '@preact/signals'
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { h } from 'preact'
 import { toTokenFiles } from './lib'
 import { type CollectVariablesHandler, type DesignTokenFile, EventName, type ResizeWindowHandler } from './types'
 
-  emit(EventName.RequestCollectVariables)
+emit(EventName.RequestCollectVariables)
 
 function Main() {
   function onWindowResize(windowSize: { width: number; height: number }) {
@@ -25,14 +25,13 @@ function Main() {
 
   const token = signal<DesignTokenFile[]>([])
 
+  const tokenJson = computed(() => JSON.stringify(token.value, null, 2))
 
   on<CollectVariablesHandler>(EventName.CollectVariables, (t) => {
-    console.log('t', t)
     token.value = toTokenFiles(t)
-    console.log('token', token.value)
   })
 
-  return <p>{JSON.stringify(token, null, 2)}</p>
+  return <p>{tokenJson}</p>
 }
 
 // biome-ignore lint/style/noDefaultExport: <explanation>

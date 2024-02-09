@@ -20,7 +20,7 @@ interface TypedValueGroup<T extends ValueType> {
 
 type TypedValue<T extends ValueType = ValueType> = ValueOf<T> | TypedValueGroupRoot<T>
 
-export type Value =
+export type Value = (
   | ColorValue
   | DimensionValue
   | FontFamilyValue
@@ -34,6 +34,8 @@ export type Value =
   | ShadowValue
   | GradientValue
   | TypographyValue
+) &
+  TokenBase
 
 export type ValueType = Value['$type']
 

@@ -20,12 +20,24 @@ export function toTokenFiles(variables: VariableSet[]): DesignTokenFile[] {
   return variables.flatMap(({ collection }) => {
     const modes = collection.modes
 
-    return modes.map((mode) => toTokenFile({ collection, variables: allVariables, mode }))
+    if (modes.length === 1) {
+      return [
+        {
+          name: `${collection.name}.json`,
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tokens: toToken({ collection, variables: allVariables, mode: modes[0]! }),
+        },
+      ]
+    }
+
+    return modes.map((mode) => ({
+      name: `${collection.name}.${mode.name}.json`,
+      tokens: toToken({ collection, variables: allVariables, mode }),
+    }))
   })
 }
 
-function toTokenFile({ collection, variables, mode }: VariableSet & { mode: Mode }): DesignTokenFile {
-  const fileName = `${collection.name}.${mode.name}.tokens.json`
+function toToken({ collection, variables, mode }: VariableSet & { mode: Mode }): DesignToken {
   const kv = collection.variableIds
     .map((id) => variables.find((v) => v.id === id))
     .filter((c): c is NonNull<typeof c> => !!c)
@@ -50,10 +62,7 @@ function toTokenFile({ collection, variables, mode }: VariableSet & { mode: Mode
         'figma.resolvedType': resolvedType,
       }
 
-      return [
-        name.replaceAll('/', '.'),
-        token,
-      ]
+      return [name.replaceAll('/', '.'), token]
     })
     .filter((c): c is NonNull<typeof c> => !!c)
     .reduce(
@@ -71,11 +80,7 @@ function toTokenFile({ collection, variables, mode }: VariableSet & { mode: Mode
     'figma.modeId': mode.modeId,
     'figma.modeName': mode.name,
   }
-
-  return {
-    name: fileName,
-    tokens
-  }
+  return tokens
 }
 
 function valueToToken(value: Value, resolvedType: ResolvedType, variables: Variable[]): TokenValue | null {

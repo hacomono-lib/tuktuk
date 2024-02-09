@@ -126,7 +126,9 @@ declare module 'astro:content' {
     }[],
   ): Promise<CollectionEntry<C>[]>
 
-  export function reference<C extends keyof AnyEntryMap>(collection: C): import('astro/zod').ZodEffects<
+  export function reference<C extends keyof AnyEntryMap>(
+    collection: C,
+  ): import('astro/zod').ZodEffects<
     import('astro/zod').ZodString,
     C extends keyof ContentEntryMap
       ? {

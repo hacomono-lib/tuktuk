@@ -1,4 +1,4 @@
-import type { Variable, VariableCollection } from "../types"
+import type { Variable, VariableCollection } from '../types'
 
 type NonNull<T> = T extends null | undefined ? never : T
 

@@ -2,7 +2,7 @@ import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
 
 // biome-ignore lint/style/noDefaultExport: <explanation>
-export  default defineConfig({
+export default defineConfig({
   integrations: [
     starlight({
       title: 'tuktuk',
