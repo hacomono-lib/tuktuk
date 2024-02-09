@@ -1507,6 +1507,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@preact/signals-core@npm:^1.4.0":
+  version: 1.5.1
+  resolution: "@preact/signals-core@npm:1.5.1"
+  checksum: 895d1addfdf6a59d0a22b5a754854d6f549cc71c5c08edb2048a137f155469e51f386b832961339cf930a432193151358b396453e56f9a41f9e3ad0ee2eba912
+  languageName: node
+  linkType: hard
+
+"@preact/signals@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@preact/signals@npm:1.2.2"
+  dependencies:
+    "@preact/signals-core": "npm:^1.4.0"
+  peerDependencies:
+    preact: 10.x
+  checksum: ecc583edec5604ba1f7aecc3ae59912cf9e8428c38c0c5352e203e12f61c8fc956e2d0a5a5710d9c2bfeba07c6312a2a501b3e35a3085ac8a0a4398fc1ee77a3
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-android-arm-eabi@npm:4.9.5":
   version: 4.9.5
   resolution: "@rollup/rollup-android-arm-eabi@npm:4.9.5"
@@ -1631,18 +1649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tuktuk/core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@tuktuk/core@workspace:packages/core"
-  languageName: unknown
-  linkType: soft
-
-"@tuktuk/format-w3c@workspace:packages/format-w3c":
-  version: 0.0.0-use.local
-  resolution: "@tuktuk/format-w3c@workspace:packages/format-w3c"
-  languageName: unknown
-  linkType: soft
-
 "@tuktuk/plugin-figma@workspace:packages/plugin-figma":
   version: 0.0.0-use.local
   resolution: "@tuktuk/plugin-figma@workspace:packages/plugin-figma"
@@ -1652,7 +1658,10 @@ __metadata:
     "@create-figma-plugin/ui": "npm:^3.1.0"
     "@create-figma-plugin/utilities": "npm:^3.1.0"
     "@figma/plugin-typings": "npm:^1.85.0"
+    "@preact/signals": "npm:^1.2.2"
+    "@tuktuk/types": "npm:0.0.0"
     concurrently: "npm:^8.2.2"
+    json-origami: "npm:^0.5.2"
     preact: "npm:^10.19.3"
     tailwindcss: "npm:^3.4.1"
     typescript: "npm:^5.3.3"
@@ -1662,6 +1671,12 @@ __metadata:
 "@tuktuk/sync-github@workspace:packages/sync-github":
   version: 0.0.0-use.local
   resolution: "@tuktuk/sync-github@workspace:packages/sync-github"
+  languageName: unknown
+  linkType: soft
+
+"@tuktuk/types@npm:0.0.0, @tuktuk/types@workspace:packages/types":
+  version: 0.0.0-use.local
+  resolution: "@tuktuk/types@workspace:packages/types"
   languageName: unknown
   linkType: soft
 
@@ -5213,6 +5228,18 @@ __metadata:
   bin:
     jsesc: bin/jsesc
   checksum: dbf59312e0ebf2b4405ef413ec2b25abb5f8f4d9bc5fb8d9f90381622ebca5f2af6a6aa9a8578f65903f9e33990a6dc798edd0ce5586894bf0e9e31803a1de88
+  languageName: node
+  linkType: hard
+
+"json-origami@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "json-origami@npm:0.5.2"
+  peerDependencies:
+    typescript: ">= 4.0.0"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 30ff2817a7fb9efedec2c439118d48a4759cc93e16607b5456aa5717ea8bb9c481b0d8698686476c2d0aeb04e122d4ef5f157e842990e58339c7d0cb7ab8ea71
   languageName: node
   linkType: hard
 

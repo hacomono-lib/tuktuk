@@ -7,13 +7,16 @@
     "build": "yarn build:css && yarn build:js",
     "build:css": "tailwindcss --input ./src/index.css --output ./build/index.css",
     "build:js": "build-figma-plugin --typecheck --minify",
-    "dev": "yarn build:css && concurrently npm:watch:css npm:watch:js",
+    "dev": "yarn build:css && concurrently \"yarn dev:css\" \"yarn dev:js\"",
     "dev:css": "tailwindcss --input ./src/index.css --output ./build/index.css --watch",
     "dev:js": "build-figma-plugin --typecheck --watch"
   },
   "dependencies": {
     "@create-figma-plugin/ui": "^3.1.0",
     "@create-figma-plugin/utilities": "^3.1.0",
+    "@preact/signals": "^1.2.2",
+    "@tuktuk/types": "0.0.0",
+    "json-origami": "^0.5.2",
     "preact": "^10.19.3"
   },
   "devDependencies": {

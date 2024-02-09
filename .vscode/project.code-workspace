@@ -1,7 +1,20 @@
 {
   "folders": [
     {
+      "name": "#ROOT",
       "path": ".."
+    },
+    {
+      "name": "plugin-figma",
+      "path": "../packages/plugin-figma"
+    },
+    {
+      "name": "sync-github",
+      "path": "../packages/sync-github"
+    },
+    {
+      "name": "types",
+      "path": "../packages/types"
     }
   ],
   "settings": {
