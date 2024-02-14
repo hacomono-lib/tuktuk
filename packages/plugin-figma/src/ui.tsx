@@ -1,37 +1,28 @@
 import '!../build/index.css'
-import { render, useWindowResize } from '@create-figma-plugin/ui'
-import { emit, on } from '@create-figma-plugin/utilities'
-import { computed, signal } from '@preact/signals'
+import { render } from '@create-figma-plugin/ui'
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { h } from 'preact'
-import { toTokenFiles } from './lib'
-import { type CollectVariablesHandler, type DesignTokenFile, EventName, type ResizeWindowHandler } from './types'
+import { GitContext, Root, createApi } from './lib-ui'
 
-emit(EventName.RequestCollectVariables)
+// emit(EventName.RequestCollectVariables)
 
 function Main() {
-  function onWindowResize(windowSize: { width: number; height: number }) {
-    emit<ResizeWindowHandler>(EventName.ResizeWindow, windowSize)
-  }
+  // const token = signal<DesignTokenFile[]>([])
 
-  useWindowResize(onWindowResize, {
-    maxHeight: 320,
-    maxWidth: 320,
-    minHeight: 120,
-    minWidth: 120,
-    resizeBehaviorOnDoubleClick: 'minimize',
-  })
+  // const tokenJson = computed(() => JSON.stringify(token.value, null, 2))
 
-  const token = signal<DesignTokenFile[]>([])
+  // on<CollectVariablesHandler>(EventName.CollectVariables, (t) => {
+  //   token.value = toTokenFiles(t)
+  // })
 
-  const tokenJson = computed(() => JSON.stringify(token.value, null, 2))
+  const gitApi = createApi('github')
 
-  on<CollectVariablesHandler>(EventName.CollectVariables, (t) => {
-    token.value = toTokenFiles(t)
-  })
-
-  return <p>{tokenJson}</p>
+  return (
+    <GitContext.Provider value={gitApi}>
+      <Root />
+    </GitContext.Provider>
+  )
 }
 
 // biome-ignore lint/style/noDefaultExport: <explanation>

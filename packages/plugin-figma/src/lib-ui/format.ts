@@ -1,5 +1,6 @@
 import type { Color as TokenColor, DesignToken, Value as TokenValue } from '@tuktuk/types'
 import { unfold } from 'json-origami'
+import type { VariableSet } from '../lib-main'
 import {
   type Color,
   type DesignTokenFile,
@@ -10,7 +11,6 @@ import {
   isColor,
   isValiableAlias,
 } from '../types'
-import type { VariableSet } from './variables'
 
 type NonNull<T> = T extends null | undefined ? never : T
 
