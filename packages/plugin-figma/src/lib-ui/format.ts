@@ -1,4 +1,4 @@
-import type { Color as TokenColor, DesignToken, Value as TokenValue } from '@tuktuk/types'
+import type { Color as TokenColor, DesignToken, Value as TokenValue } from '@tuktuk/core'
 import { unfold } from 'json-origami'
 import type { VariableSet } from '../lib-main'
 import {
@@ -26,6 +26,7 @@ export function toTokenFiles(variables: VariableSet[]): DesignTokenFile[] {
           name: `${collection.name}.json`,
           // biome-ignore lint/style/noNonNullAssertion: <explanation>
           tokens: toToken({ collection, variables: allVariables, mode: modes[0]! }),
+          placements: ['figma']
         },
       ]
     }

@@ -1,82 +1,133 @@
-import { Button, Dropdown, MiddleAlign, SearchTextbox, Text, VerticalSpace } from '@create-figma-plugin/ui'
+import { Bold, Button, Container, Dropdown, Text, VerticalSpace } from '@create-figma-plugin/ui'
 import { emit } from '@create-figma-plugin/utilities'
+import type { Organization, Repository, User } from '@tuktuk/core'
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { type JSX, h } from 'preact'
-import { useMemo, useState } from 'preact/hooks'
+import { useContext, useEffect, useMemo, useState } from 'preact/hooks'
 import { EventName, type ResizeWindowHandler } from '../../types'
+import { SearchTextbox } from '../components'
+import { GitContext } from '../contexts'
 
 const PAGE_HEIGHT = 600
-const PAGE_WIDTH = 300
+const PAGE_WIDTH = 400
+
+type NotNil<T> = T extends null | undefined ? never : T
 
 interface Props {
-  onSelectedRepo: (repo: string) => void
+  onSelectedRepo: (repo: Repository) => void
   onSignOut: () => void
 }
 
 export function SelectRepo({ onSelectedRepo }: Props) {
-  // const gitApi = useContext(GitContext)
+  const gitApi = useContext(GitContext)
 
   emit<ResizeWindowHandler>(EventName.ResizeWindow, { height: PAGE_HEIGHT, width: PAGE_WIDTH })
 
-  const [options, setOptions] = useState<string[]>([])
+  const [user, setUser] = useState<User | undefined>()
 
-  const [loading, setLoading] = useState(false)
+  const [orgs, setOrgs] = useState<Organization[]>([])
+
+  const [selectedOrg, setSelectedOrg] = useState<User | Organization | null>(null)
+
+  const orgOptions = useMemo<(User | Organization)[]>(
+    () => [user, ...orgs].filter((v): v is NotNil<typeof v> => !!v),
+    [user, orgs],
+  )
+
+  useEffect(() => {
+    ;(async () => {
+      const [user, orgs] = await Promise.all([gitApi.user.getCurrent(), gitApi.org.list()])
+      setUser(user)
+      setSelectedOrg(user)
+      setOrgs(orgs)
+    })()
+  }, [])
+
+  const handleSelectOrg = (event: JSX.TargetedEvent<HTMLInputElement>) => {
+    setSelectedOrg(orgOptions.find((org) => org.name === event.currentTarget.value) ?? null)
+    setSelectedRepo(null)
+    setSearchText('')
+  }
+
+  const [repos, setRepos] = useState<Repository[]>([])
+
+  useEffect(() => {
+    ;(async () => {
+      if (selectedOrg === null) {
+        return
+      }
+
+      if (user && selectedOrg.name === user.name) {
+        const userRepos = await gitApi.repos.listByUser(user)
+        setRepos(userRepos)
+        return
+      }
+
+      const userRepos = await gitApi.repos.listByOrganization(selectedOrg)
+      setRepos(userRepos)
+    })()
+  }, [selectedOrg])
 
   const [searchText, setSearchText] = useState('')
 
-  const [selected, setSelectedRepo] = useState<string | null>(null)
+  const repoOptions = useMemo(
+    () =>
+      searchText.length > 0
+        ? repos.filter((repo) => repo.permissions.push).filter((repo) => repo.name.includes(searchText))
+        : repos,
+    [repos, searchText],
+  )
 
-  const findRepos = async (searchWord?: string) => {
-    setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    setOptions(['org/repo1', 'org/repo2', 'org/repo3'])
-    setLoading(false)
-  }
+  const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null)
 
   const handleInputSearch = (event: Event) => {
     setSearchText((event.target as HTMLInputElement).value)
-    findRepos(searchText)
   }
 
-  const handleChange = (event: JSX.TargetedEvent<HTMLInputElement>) => {
-    setSelectedRepo(event.currentTarget.value)
+  const handleSelectRepo = (event: JSX.TargetedEvent<HTMLInputElement>) => {
+    setSelectedRepo(repoOptions.find((repo) => repo.fullName === event.currentTarget.value) ?? null)
   }
 
   const submit = () => {
-    if (selected === null) {
+    if (selectedRepo === null) {
       return
     }
-    onSelectedRepo(selected)
+    onSelectedRepo(selectedRepo)
   }
 
-  const canSubmit = useMemo(() => !loading && selected !== null, [loading, selected])
-
-  findRepos()
-
   return (
-    <MiddleAlign>
-      <Text align="center" size={128}>
-        Select Repos
-      </Text>
-      <VerticalSpace space="extraLarge" />
-      <SearchTextbox value={searchText} onInput={handleInputSearch} />
-      <VerticalSpace space="medium" />
-      {loading ? (
-        <Text align="center">Loading...</Text>
-      ) : (
+    <Container space="medium">
+      <form onSubmit={submit}>
+        <VerticalSpace space="extraLarge" />
+        <Text align="center">
+          <Bold>Select Repository</Bold>
+        </Text>
+        <VerticalSpace space="extraLarge" />
+        <Text align="left">organization</Text>
+        <VerticalSpace space="medium" />
         <Dropdown
-          options={options.map((value) => ({ value }))}
-          onChange={handleChange}
-          value={selected}
-          variant="underline"
+          options={orgOptions.map((org) => ({ value: org.name }))}
+          onChange={handleSelectOrg}
+          value={selectedOrg?.name ?? null}
+          variant="border"
         />
-      )}
-      <VerticalSpace space="extraLarge" />
-      <Button fullWidth={true} onClick={submit} disabled={canSubmit}>
-        Select Repo
-      </Button>
-    </MiddleAlign>
+        <VerticalSpace space="extraLarge" />
+        <Text align="left">repository</Text>
+        <VerticalSpace space="medium" />
+        <SearchTextbox placeholder="Search for a repository" value={searchText} onInput={handleInputSearch} />
+        <VerticalSpace space="medium" />
+        <Dropdown
+          options={repoOptions.map((repo) => ({ value: repo.fullName }))}
+          onChange={handleSelectRepo}
+          value={selectedRepo?.fullName ?? null}
+          variant="border"
+        />
+        <VerticalSpace space="extraLarge" />
+        <Button fullWidth={true} type="submit" disabled={selectedRepo === null}>
+          Select Repo
+        </Button>
+      </form>
+    </Container>
   )
 }

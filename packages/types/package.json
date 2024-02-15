@@ -1,7 +1,0 @@
-{
-  "name": "@tuktuk/types",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./src/index.ts",
-  "module": "./src/index.ts"
-}

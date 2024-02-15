@@ -1,30 +1,28 @@
 import { emit } from '@create-figma-plugin/utilities'
+import type { Repository } from '@tuktuk/core'
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { Fragment, h } from 'preact'
 import { useContext, useMemo, useState } from 'preact/hooks'
 import { type CacheGitTokenHandler, EventName } from '../../types'
 import { GitContext } from '../contexts'
+import { FilePreview } from './FilePreview'
 import { SelectRepo } from './SelectRepos'
 import { Unauthorized } from './Unauthorized'
 
 enum PageState {
   Unauthorized = 0,
   SelectRepos = 1,
-  Edit = 2,
+  FilePreview = 2,
   Completed = 3,
 }
-
-const DEFAULT_PAGE_DIR = '/'
 
 export function Root() {
   const gitApi = useContext(GitContext)
 
   const [authorized, setAuthorized] = useState(false)
 
-  const [repo, setRepo] = useState<string | undefined>(undefined)
-
-  const [baseDir, setBaseDir] = useState<string>(DEFAULT_PAGE_DIR)
+  const [repo, setRepo] = useState<Repository | null>(null)
 
   const [pullRequestUrl, setPullRequestUrl] = useState<string | undefined>(undefined)
 
@@ -39,18 +37,17 @@ export function Root() {
 
   const signout = () => {
     setAuthorized(false)
-    setRepo(undefined)
-    setBaseDir(DEFAULT_PAGE_DIR)
+    setRepo(null)
+    setPullRequestUrl(undefined)
+  }
+
+  const backToSelectRepos = () => {
+    setRepo(null)
     setPullRequestUrl(undefined)
   }
 
   const backToEdit = () => {
-    setBaseDir(DEFAULT_PAGE_DIR)
     setPullRequestUrl(undefined)
-  }
-
-  const onCompleted = (pullRequestUrl: string) => {
-    setPullRequestUrl(pullRequestUrl)
   }
 
   const state = useMemo(() => {
@@ -63,7 +60,7 @@ export function Root() {
     }
 
     if (!pullRequestUrl) {
-      return PageState.Edit
+      return PageState.FilePreview
     }
 
     return PageState.Completed
@@ -77,8 +74,8 @@ export function Root() {
             return <Unauthorized onAuthorized={signin} />
           case PageState.SelectRepos:
             return <SelectRepo onSelectedRepo={setRepo} onSignOut={signout} />
-          case PageState.Edit:
-            return <div> Edit </div>
+          case PageState.FilePreview:
+            return <FilePreview onCreatedPullRequest={setPullRequestUrl} onBack={backToSelectRepos} onSignOut={signout} />
           case PageState.Completed:
             return <div> Completed </div>
         }

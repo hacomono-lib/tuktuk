@@ -13,8 +13,8 @@
       "path": "../packages/sync-github"
     },
     {
-      "name": "types",
-      "path": "../packages/types"
+      "name": "core",
+      "path": "../packages/core"
     }
   ],
   "settings": {
