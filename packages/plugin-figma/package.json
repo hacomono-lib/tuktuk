@@ -4,19 +4,24 @@
   "private": true,
   "scripts": {
     "prepare": "yarn build:css",
-    "build": "yarn build:css && yarn build:js",
+    "build": "yarn fix:diff2html && yarn build:css && yarn build:js",
     "build:css": "tailwindcss --input ./src/index.css --output ./build/index.css",
     "build:js": "build-figma-plugin --typecheck --minify",
-    "dev": "yarn build:css && concurrently \"yarn dev:css\" \"yarn dev:js\"",
+    "dev": "yarn fix:diff2html && yarn build:css && concurrently \"yarn dev:css\" \"yarn dev:js\"",
     "dev:css": "tailwindcss --input ./src/index.css --output ./build/index.css --watch",
-    "dev:js": "build-figma-plugin --typecheck --watch"
+    "dev:js": "build-figma-plugin --typecheck --watch",
+    "fix:diff2html": "mkdir -p build && cat ../../node_modules/diff2html/bundles/css/diff2html.min.css | sed 's/\\\\/\\\\\\\\/g' > ./build/diff2html.min.css"
   },
   "dependencies": {
     "@create-figma-plugin/ui": "^3.1.0",
     "@create-figma-plugin/utilities": "^3.1.0",
     "@preact/signals": "^1.2.2",
+    "@supercharge/promise-pool": "^3.1.1",
     "@tuktuk/core": "0.0.0",
     "@tuktuk/sync-github": "0.0.0",
+    "@types/diff": "^5.0.9",
+    "diff": "^5.2.0",
+    "diff2html": "^3.4.47",
     "json-origami": "^0.5.2",
     "lucide-preact": "^0.330.0",
     "ofetch": "^1.3.3",

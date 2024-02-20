@@ -1,53 +1,58 @@
-import { emit } from '@create-figma-plugin/utilities'
-import type { Repository } from '@tuktuk/core'
+import type { PullRequest, Repository } from '@tuktuk/core'
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { Fragment, h } from 'preact'
-import { useContext, useMemo, useState } from 'preact/hooks'
-import { type CacheGitTokenHandler, EventName } from '../../types'
-import { GitContext } from '../contexts'
-import { FilePreview } from './FilePreview'
+import { useMemo, useState } from 'preact/hooks'
+// import { GitContext } from '../contexts'
+import { Review } from './Review'
 import { SelectRepo } from './SelectRepos'
 import { Unauthorized } from './Unauthorized'
 
 enum PageState {
   Unauthorized = 0,
-  SelectRepos = 1,
-  FilePreview = 2,
-  Completed = 3,
+  SelectRepo = 1,
+  Review = 2,
+  CreatePr = 3,
+  Completed = 4,
 }
 
 export function Root() {
-  const gitApi = useContext(GitContext)
+  // const gitApi = useContext(GitContext)
 
   const [authorized, setAuthorized] = useState(false)
 
   const [repo, setRepo] = useState<Repository | null>(null)
 
-  const [pullRequestUrl, setPullRequestUrl] = useState<string | undefined>(undefined)
+  const [pullRequest, setPullRequest] = useState<PullRequest | null>(null)
+
+  const [approved, setApproved] = useState(false)
 
   const signin = () => {
-    if (!gitApi.token) {
-      return
-    }
-
-    emit<CacheGitTokenHandler>(EventName.CacheGitToken, { provider: 'github', accessToken: gitApi.token })
+    // emit<CacheGitTokenHandler>(EventName.CacheGitToken, { provider: 'github', accessToken: gitApi.token })
     setAuthorized(true)
   }
 
   const signout = () => {
     setAuthorized(false)
     setRepo(null)
-    setPullRequestUrl(undefined)
+    setPullRequest(null)
   }
 
   const backToSelectRepos = () => {
     setRepo(null)
-    setPullRequestUrl(undefined)
+    setPullRequest(null)
+  }
+
+  const approve = () => {
+    setApproved(true)
+  }
+
+  const backToReview = () => {
+    setApproved(false)
   }
 
   const backToEdit = () => {
-    setPullRequestUrl(undefined)
+    setPullRequest(null)
   }
 
   const state = useMemo(() => {
@@ -56,15 +61,19 @@ export function Root() {
     }
 
     if (!repo) {
-      return PageState.SelectRepos
+      return PageState.SelectRepo
     }
 
-    if (!pullRequestUrl) {
-      return PageState.FilePreview
+    if (!pullRequest) {
+      return PageState.Review
+    }
+
+    if (approved) {
+      return PageState.CreatePr
     }
 
     return PageState.Completed
-  }, [authorized, repo, pullRequestUrl])
+  }, [authorized, repo, pullRequest])
 
   return (
     <Fragment>
@@ -72,10 +81,20 @@ export function Root() {
         switch (state) {
           case PageState.Unauthorized:
             return <Unauthorized onAuthorized={signin} />
-          case PageState.SelectRepos:
+          case PageState.SelectRepo:
             return <SelectRepo onSelectedRepo={setRepo} onSignOut={signout} />
-          case PageState.FilePreview:
-            return <FilePreview onCreatedPullRequest={setPullRequestUrl} onBack={backToSelectRepos} onSignOut={signout} />
+          case PageState.Review:
+            return (
+              <Review
+                // biome-ignore lint/style/noNonNullAssertion: <explanation>
+                repo={repo!}
+                onCreatedPullRequest={setPullRequest}
+                onBack={backToSelectRepos}
+                onSignOut={signout}
+              />
+            )
+          case PageState.CreatePr:
+            return <div> create pr </div>
           case PageState.Completed:
             return <div> Completed </div>
         }

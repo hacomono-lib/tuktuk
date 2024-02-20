@@ -25,6 +25,6 @@ export class SearchTextbox extends Component<SearchTextboxProps> {
       }
     }
 
-    return <SearchInput {...props} ref={this.#ref} onKeyDown={handleKeyDown}/>
+    return <SearchInput {...props} ref={this.#ref} onKeyDown={handleKeyDown} />
   }
 }

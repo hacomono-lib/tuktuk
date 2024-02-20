@@ -1,14 +1,14 @@
-import type { DesignToken } from '@tuktuk/core'
-
 export interface DesignTokenFile {
   name: string
-  tokens?: DesignToken
+  filename: string
+  contents?: string
 }
 
 export interface DesignTokenDiff {
   name: string
   figma?: DesignTokenFile
   git?: DesignTokenFile
+  diff: string
 }
 
 export type Provider = 'github'

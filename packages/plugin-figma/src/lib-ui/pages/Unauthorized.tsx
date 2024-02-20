@@ -26,7 +26,6 @@ export function Unauthorized({ onAuthorized }: Props) {
 
   emit<RequestCachedGitTokenHandler>(EventName.RequestCachedGitToken, 'github')
 
-  // FIXME: remove this PAT
   const [pat, setPat] = useState('')
 
   on<CachedGitTokenHandler>(EventName.CachedGitToken, (token) => {

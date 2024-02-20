@@ -1,8 +1,5 @@
-import type { DesignTokenFile } from "../../plugin-figma/src/types"
-
 export interface GitApi {
   authorize(token?: string): Promise<void>
-  readonly token: string | undefined
   readonly user: UserApi
   readonly org: OrganizationApi
   readonly branch: BranchApi
@@ -44,9 +41,16 @@ export interface Repository {
   contentsUrl: string
 
   permissions: {
-    admin: boolean
-    push: boolean
-    pull: boolean
+    admin?: boolean
+    maintain?: boolean
+    push?: boolean
+    pull?: boolean
+    triage?: boolean
+  }
+
+  owner: {
+    name: string
+    type: 'User' | 'Organization'
   }
 }
 
@@ -58,16 +62,17 @@ export interface BranchApi {
 export type Branch = string
 
 export interface FileApi {
-  listFiles(dir: string): Promise<DesignTokenFile[]>
-  loadFile(dir: string, filename: string): Promise<DesignTokenFile>
+  listTokenFiles(repo: Repository, branch: string, dir: string): Promise<GitDesignTokenFile[]>
+  getTokenFile(repo: Repository, branch: string, filepath: string): Promise<GitDesignTokenFile | null>
 
-  update(filePath: string, content: string): Promise<void>
-  delete(filePath: string): Promise<void>
+  upsert(repo: Repository, branch: string, filename: string, content: string): Promise<void>
+  delete(repo: Repository, branch: string, filename: string): Promise<void>
 }
 
-export interface File {
-  path: string
-  content: string
+export interface GitDesignTokenFile {
+  filename: string
+  name: string
+  contents?: string
 }
 
 export interface PullRequestApi {

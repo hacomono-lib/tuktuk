@@ -17,23 +17,28 @@ type NonNull<T> = T extends null | undefined ? never : T
 export function toTokenFiles(variables: VariableSet[]): DesignTokenFile[] {
   const allVariables = variables.flatMap(({ variables }) => variables)
 
-  return variables.flatMap(({ collection }) => {
+  return variables.flatMap(({ collection }): DesignTokenFile[] => {
     const modes = collection.modes
 
     if (modes.length === 1) {
       return [
         {
-          name: `${collection.name}.json`,
+          name: collection.name,
+          filename: `${collection.name}.json`,
           // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tokens: toToken({ collection, variables: allVariables, mode: modes[0]! }),
-          placements: ['figma']
+          contents: JSON.stringify(
+            { [collection.name]: toToken({ collection, variables: allVariables, mode: modes[0]! }) },
+            null,
+            2,
+          ),
         },
       ]
     }
 
     return modes.map((mode) => ({
-      name: `${collection.name}.${mode.name}.json`,
-      tokens: toToken({ collection, variables: allVariables, mode }),
+      name: `${collection.name}.${mode.name}`,
+      filename: `${collection.name}.${mode.name}.json`,
+      tokens: { [collection.name]: toToken({ collection, variables: allVariables, mode }) },
     }))
   })
 }
