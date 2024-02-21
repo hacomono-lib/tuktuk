@@ -1,6 +1,6 @@
 import { Bold, Button, Text } from '@create-figma-plugin/ui'
 import { emit } from '@create-figma-plugin/utilities'
-import type { PullRequest, Repository } from '@tuktuk/core'
+import type { Branch, PullRequest, Repository } from '@tuktuk/core'
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { Fragment, h } from 'preact'
@@ -27,7 +27,7 @@ interface ReviewProps {
 export function Review({ repo, onBack }: ReviewProps) {
   const [baseDir, setBaseDir] = useState(DEFAULT_DIR)
 
-  const [branch, setBranch] = useState(repo.defaultBranch)
+  const [branch, setBranch] = useState<Branch>(repo.defaultBranch)
 
   const { files: gitFiles, loading: loadingFiles } = loadGitFiles(repo, branch, baseDir)
 
@@ -46,6 +46,7 @@ export function Review({ repo, onBack }: ReviewProps) {
   emit<ResizeWindowHandler>(EventName.ResizeWindow, { height: PAGE_HEIGHT, width: PAGE_WIDTH })
 
   // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation> FIXME: 実力不足のため追加
   const [selectedFile, setSelectedFile] = useState<DesignTokenDiff>(diffSet[0]!)
 
   return (
@@ -56,7 +57,13 @@ export function Review({ repo, onBack }: ReviewProps) {
         </SidebarLayout.Sidebar>
         <SidebarLayout.MainContent>
           <SidebarLayout.MainContentHeader>
-            <ReviewHeader baseDir={baseDir} onBaseDirChange={setBaseDir} branch={branch} onBranchChange={setBranch} />
+            <ReviewHeader
+              repo={repo}
+              baseDir={baseDir}
+              onBaseDirChange={setBaseDir}
+              branch={branch}
+              onBranchChange={setBranch}
+            />
           </SidebarLayout.MainContentHeader>
           <SidebarLayout.MainContentBody>
             <Diff class="p-8" diff={selectedFile} />

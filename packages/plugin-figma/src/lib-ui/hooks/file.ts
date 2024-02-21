@@ -1,5 +1,5 @@
 import { emit, on } from '@create-figma-plugin/utilities'
-import type { Repository } from '@tuktuk/core'
+import type { Branch, Repository } from '@tuktuk/core'
 import { createTwoFilesPatch } from 'diff'
 import { useContext, useEffect, useMemo, useState } from 'preact/hooks'
 import {
@@ -17,7 +17,7 @@ interface LoadFilesState {
   files: DesignTokenFile[]
 }
 
-export function loadGitFiles(repo: Repository, branch: string, baseDir: string): LoadFilesState {
+export function loadGitFiles(repo: Repository, { name: branchName }: Branch, baseDir: string): LoadFilesState {
   const gitApi = useContext(GitContext)
 
   const [gitFiles, setGitFiles] = useState<DesignTokenFile[]>([])
@@ -27,18 +27,18 @@ export function loadGitFiles(repo: Repository, branch: string, baseDir: string):
   useEffect(() => {
     setFileLoading(true)
     ;(async () => {
-      const files = await gitApi.file.listTokenFiles(repo, branch, baseDir)
+      const files = await gitApi.file.listTokenFiles(repo, branchName, baseDir)
 
       const loadedFiles = await Promise.all(
         files.map(async (file) => {
-          const content = await gitApi.file.getTokenFile(repo, branch, file.filename)
+          const content = await gitApi.file.getTokenFile(repo, branchName, file.filename)
           return content ? { ...file, contents: content.contents } : file
         }),
       )
       setGitFiles(loadedFiles)
       setFileLoading(false)
     })()
-  }, [repo, branch, baseDir])
+  }, [repo, branchName, baseDir])
 
   return { loading: fileLoading, files: gitFiles }
 }

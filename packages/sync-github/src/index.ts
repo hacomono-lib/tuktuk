@@ -1,4 +1,4 @@
-import type { GitApi, Organization, Repository, User } from '@tuktuk/core'
+import type { Branch, GitApi, Organization, Repository, User } from '@tuktuk/core'
 import type { GitDesignTokenFile } from '@tuktuk/core'
 import { Octokit, RequestError } from 'octokit'
 import { decode } from './encode'
@@ -33,7 +33,48 @@ class GitApiImpl implements GitApi {
     this.#octokit = new Octokit()
   }
 
-  readonly branch = {} as any
+  readonly branch = {
+    list: async ({ owner, name }: Pick<Repository, 'owner' | 'name'>): Promise<Branch[]> => {
+      const response = await this.#octokit.request('GET /repos/{owner}/{repo}/branches', {
+        owner: owner.name,
+        repo: name,
+      })
+
+      return response.data.map((branch) => ({ name: branch.name, protected: branch.protected }))
+    },
+
+    get: async (repo: Pick<Repository, 'owner' | 'name'>, branchName: string): Promise<Branch> => {
+      const { owner, name } = repo
+      const response = await this.#octokit.request('GET /repos/{owner}/{repo}/branches/{branch}', {
+        owner: owner.name,
+        repo: name,
+        branch: branchName,
+      })
+
+      return {
+        name: response.data.name,
+        protected: response.data.protected,
+      }
+    },
+
+    create: async (
+      { owner, name }: Pick<Repository, 'owner' | 'name'>,
+      baseBranch: string,
+      branchName: string,
+    ): Promise<Branch> => {
+      const response = await this.#octokit.request('POST /repos/{owner}/{repo}/git/refs', {
+        owner: owner.name,
+        repo: name,
+        ref: `refs/heads/${branchName}`,
+        sha: baseBranch,
+      })
+
+      return {
+        name: response.data.ref,
+        protected: false,
+      }
+    },
+  }
 
   readonly file = {
     listTokenFiles: async (repo: Repository, branch: string, dir: string): Promise<GitDesignTokenFile[]> => {
@@ -109,49 +150,67 @@ class GitApiImpl implements GitApi {
         username: user.name,
       })
 
-      return response.data.map(
-        (repo): Repository => ({
-          id: repo.id,
-          name: repo.name,
-          fullName: repo.full_name,
-          private: repo.private,
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          defaultBranch: repo.default_branch!,
-          url: repo.url,
-          htmlUrl: repo.html_url,
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          gitUrl: repo.git_url!,
-          contentsUrl: repo.contents_url,
-          permissions: repo.permissions ?? {},
-          owner: {
-            name: repo.owner.login,
-            type: repo.owner.type as 'User' | 'Organization',
-          },
-        }),
+      return Promise.all(
+        response.data
+          .filter(
+            (repo) => repo.name !== '.github' && repo.name !== repo.owner.login && !repo.archived && !repo.is_template,
+          )
+          .map(async (repo): Promise<Repository> => {
+            const owner = {
+              name: repo.owner.login,
+              type: repo.owner.type as 'User' | 'Organization',
+            }
+
+            return {
+              id: repo.id,
+              name: repo.name,
+              fullName: repo.full_name,
+              private: repo.private,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              defaultBranch: await this.branch.get({ owner, name: repo.name }, repo.default_branch!),
+              url: repo.url,
+              htmlUrl: repo.html_url,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              gitUrl: repo.git_url!,
+              contentsUrl: repo.contents_url,
+              permissions: repo.permissions ?? {},
+              owner,
+            }
+          }),
       )
     },
 
     listByOrganization: async (organization: Organization): Promise<Repository[]> => {
       const response = await this.#octokit.request('GET /orgs/{org}/repos', { org: organization.name })
-      return response.data.map(
-        (repo): Repository => ({
-          id: repo.id,
-          name: repo.name,
-          fullName: repo.full_name,
-          private: repo.private,
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          defaultBranch: repo.default_branch!,
-          url: repo.url,
-          htmlUrl: repo.html_url,
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          gitUrl: repo.git_url!,
-          contentsUrl: repo.contents_url,
-          permissions: repo.permissions ?? {},
-          owner: {
-            name: repo.owner.login,
-            type: repo.owner.type as 'User' | 'Organization',
-          },
-        }),
+      return Promise.all(
+        response.data
+          .filter((repo) => repo.name !== '.github' && !repo.archived && !repo.is_template)
+          .map(async (repo): Promise<Repository> => {
+            const owner = {
+              name: repo.owner.login,
+              type: repo.owner.type as 'User' | 'Organization',
+            }
+
+            return {
+              id: repo.id,
+              name: repo.name,
+              fullName: repo.full_name,
+              private: repo.private,
+              defaultBranch:
+                (repo.size ?? 0) <= 0
+                  ? // biome-ignore lint/style/noNonNullAssertion: <explanation>
+                    { name: repo.default_branch!, protected: false }
+                  : // biome-ignore lint/style/noNonNullAssertion: <explanation>
+                    await this.branch.get({ owner, name: repo.name }, repo.default_branch!),
+              url: repo.url,
+              htmlUrl: repo.html_url,
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              gitUrl: repo.git_url!,
+              contentsUrl: repo.contents_url,
+              permissions: repo.permissions ?? {},
+              owner,
+            }
+          }),
       )
     },
   }

@@ -18,7 +18,7 @@ export interface Repository {
   name: string
   fullName: string
   private: boolean
-  defaultBranch: string
+  defaultBranch: Branch
 
   /**
    * @example "https://api.github.com/repos/octocat/Hello-World"
@@ -55,11 +55,15 @@ export interface Repository {
 }
 
 export interface BranchApi {
-  list(): Promise<Branch[]>
-  create(branchName: string): Promise<Branch>
+  list(repo: Pick<Repository, 'owner' | 'name'>): Promise<Branch[]>
+  get(repo: Pick<Repository, 'owner' | 'name'>, branchName: string): Promise<Branch>
+  create(repo: Pick<Repository, 'owner' | 'name'>, baseBranch: string, branchName: string): Promise<Branch>
 }
 
-export type Branch = string
+export interface Branch {
+  name: string
+  protected?: boolean
+}
 
 export interface FileApi {
   listTokenFiles(repo: Repository, branch: string, dir: string): Promise<GitDesignTokenFile[]>

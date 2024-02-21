@@ -29,7 +29,7 @@ SidebarLayout.MainContent = function MainContent({ children }: PropsWithChildren
 }
 
 SidebarLayout.MainContentHeader = function Header({ children }: PropsWithChildren<EmptyProps>) {
-  return <header class="flex flex-row px-2 py-4 h-14 justify-between">{children}</header>
+  return <header class="flex flex-row px-8 py-4 h-14 justify-between">{children}</header>
 }
 
 SidebarLayout.MainContentBody = function Body({ children }: PropsWithChildren<EmptyProps>) {
