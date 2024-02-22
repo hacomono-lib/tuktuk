@@ -3,6 +3,7 @@ import type { PullRequest, Repository } from '@tuktuk/core'
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { Fragment, h } from 'preact'
 import { useMemo, useState } from 'preact/hooks'
+import { Completed } from './Completed'
 // import { GitContext } from '../contexts'
 import { Review } from './Review'
 import { SelectRepo } from './SelectRepos'
@@ -79,7 +80,8 @@ export function Root() {
               />
             )
           case PageState.Completed:
-            return <div> Completed </div>
+            // biome-ignore lint/style/noNonNullAssertion: <explanation>
+            return <Completed pullRequest={pullRequest!} onBack={backToEdit} onSignOut={signout} />
         }
       })()}
     </Fragment>

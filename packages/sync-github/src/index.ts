@@ -155,8 +155,6 @@ class GitApiImpl implements GitApi {
     },
 
     create: async (repo: Repository, branch: Branch, filepath: string, content: string): Promise<void> => {
-      console.log('create', repo, branch, filepath, content)
-
       await this.#octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
         owner: repo.owner.name,
         repo: repo.name,
@@ -168,8 +166,6 @@ class GitApiImpl implements GitApi {
     },
 
     update: async (repo: Repository, branch: Branch, file: GitDesignTokenFile, content: string): Promise<void> => {
-      console.log('upsert', repo, branch, file, content)
-
       await this.#octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
         owner: repo.owner.name,
         repo: repo.name,
@@ -182,7 +178,6 @@ class GitApiImpl implements GitApi {
     },
 
     delete: async (repo: Repository, branch: Branch, file: GitDesignTokenFile): Promise<void> => {
-      console.log('delete', repo, branch, file)
       if (!file.sha) {
         throw new Error('File does not have a SHA')
       }

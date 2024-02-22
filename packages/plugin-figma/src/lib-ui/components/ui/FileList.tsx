@@ -12,8 +12,6 @@ export interface FileListProps {
 }
 
 export function FileList({ files, selected, onSelectFile }: FileListProps) {
-  console.log(files)
-  console.log(selected)
   return (
     <Fragment>
       <VerticalSpace space="medium" />
@@ -50,11 +48,14 @@ function FileSelector({ file, selected, onSelect }: FileSelectorProps) {
     }
   }
 
-  const shouldBeRemoved = useMemo(() => !file.figma && file.git, [file])
+  // FIXME: リストの表示を変更する
+  const _shouldBeRemoved = useMemo(() => !file.figma && file.git, [file])
 
-  const shouldBeCreated = useMemo(() => file.figma && !file.git, [file])
+  // FIXME: リストの表示を変更する
+  const _shouldBeCreated = useMemo(() => file.figma && !file.git, [file])
 
-  const shouldBeUpdated = useMemo(() => file.figma && file.git && hasDiff(file), [file])
+  // FIXME: リストの表示を変更する
+  const _shouldBeUpdated = useMemo(() => file.figma && file.git && hasDiff(file), [file])
 
   return (
     <SelectableItem value={selected} onChange={handleChange}>
@@ -63,6 +64,7 @@ function FileSelector({ file, selected, onSelect }: FileSelectorProps) {
   )
 }
 
-function hasDiff(diff: DesignTokenDiff): boolean {
+// FIXME: リストの表示を変更する
+function hasDiff(_diff: DesignTokenDiff): boolean {
   return true
 }
