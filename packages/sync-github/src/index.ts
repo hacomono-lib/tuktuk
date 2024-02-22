@@ -1,11 +1,19 @@
-import type { Branch, GitApi, Organization, Repository, User } from '@tuktuk/core'
-import type { GitDesignTokenFile } from '@tuktuk/core'
+import type {
+  Branch,
+  CreatePrOptions,
+  GitApi,
+  GitDesignTokenFile,
+  Organization,
+  PullRequest,
+  Repository,
+  User,
+} from '@tuktuk/core'
 import { Octokit, RequestError } from 'octokit'
-import { decode } from './encode'
+import { decode, encode } from './encode'
 import { fixPath } from './path'
 
 export function createApi(): GitApi {
-  return new GitApiImpl() as any
+  return new GitApiImpl()
 }
 
 class GitApiImpl implements GitApi {
@@ -40,7 +48,7 @@ class GitApiImpl implements GitApi {
         repo: name,
       })
 
-      return response.data.map((branch) => ({ name: branch.name, protected: branch.protected }))
+      return response.data.map((branch) => ({ name: branch.name, protected: branch.protected, sha: branch.commit.sha }))
     },
 
     get: async (repo: Pick<Repository, 'owner' | 'name'>, branchName: string): Promise<Branch> => {
@@ -54,24 +62,30 @@ class GitApiImpl implements GitApi {
       return {
         name: response.data.name,
         protected: response.data.protected,
+        sha: response.data.commit.sha,
       }
     },
 
     create: async (
       { owner, name }: Pick<Repository, 'owner' | 'name'>,
-      baseBranch: string,
-      branchName: string,
+      baseBranch: Branch,
+      newBranchName: string,
     ): Promise<Branch> => {
+      if (!baseBranch.sha) {
+        throw new Error('Base branch does not have a SHA')
+      }
+
       const response = await this.#octokit.request('POST /repos/{owner}/{repo}/git/refs', {
         owner: owner.name,
         repo: name,
-        ref: `refs/heads/${branchName}`,
-        sha: baseBranch,
+        ref: `refs/heads/${newBranchName}`,
+        sha: baseBranch.sha,
       })
 
       return {
         name: response.data.ref,
         protected: false,
+        sha: response.data.object.sha,
       }
     },
   }
@@ -85,7 +99,6 @@ class GitApiImpl implements GitApi {
           path: fixPath(dir),
           ref: branch,
         })
-        console.log(response)
 
         const files = Array.isArray(response.data) ? response.data : [response.data]
 
@@ -96,6 +109,7 @@ class GitApiImpl implements GitApi {
             (file): GitDesignTokenFile => ({
               filename: file.path,
               name: file.name,
+              sha: file.sha,
               contents: !!file.content && !!file.encoding ? decode(file.content, file.encoding) : undefined,
             }),
           )
@@ -126,11 +140,10 @@ class GitApiImpl implements GitApi {
           throw new Error('Not a file')
         }
 
-        console.log(file)
-
         return {
           filename: file.path,
           name: file.name,
+          sha: file.sha,
           contents: !!file.content && !!file.encoding ? decode(file.content, file.encoding) : undefined,
         }
       } catch (e) {
@@ -140,9 +153,73 @@ class GitApiImpl implements GitApi {
         throw e
       }
     },
-  } as any
 
-  readonly pullRequest = {} as any
+    create: async (repo: Repository, branch: Branch, filepath: string, content: string): Promise<void> => {
+      console.log('create', repo, branch, filepath, content)
+
+      await this.#octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+        owner: repo.owner.name,
+        repo: repo.name,
+        path: fixPath(filepath),
+        message: `Create ${filepath}`,
+        content: encode(content, 'base64'),
+        branch: branch.name,
+      })
+    },
+
+    update: async (repo: Repository, branch: Branch, file: GitDesignTokenFile, content: string): Promise<void> => {
+      console.log('upsert', repo, branch, file, content)
+
+      await this.#octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+        owner: repo.owner.name,
+        repo: repo.name,
+        path: fixPath(file.filename),
+        message: `Update ${file.filename}`,
+        content: encode(content, 'base64'),
+        sha: file.sha,
+        branch: branch.name,
+      })
+    },
+
+    delete: async (repo: Repository, branch: Branch, file: GitDesignTokenFile): Promise<void> => {
+      console.log('delete', repo, branch, file)
+      if (!file.sha) {
+        throw new Error('File does not have a SHA')
+      }
+
+      await this.#octokit.request('DELETE /repos/{owner}/{repo}/contents/{path}', {
+        owner: repo.owner.name,
+        repo: repo.name,
+        path: fixPath(file.filename),
+        message: `Delete ${file.filename}`,
+        branch: branch.name,
+        sha: file.sha,
+      })
+    },
+  }
+
+  readonly pullRequest = {
+    create: async (
+      repo: Repository,
+      headBranch: Branch,
+      baseBranch: Branch,
+      opt: CreatePrOptions,
+    ): Promise<PullRequest> => {
+      const response = await this.#octokit.request('POST /repos/{owner}/{repo}/pulls', {
+        owner: repo.owner.name,
+        repo: repo.name,
+        title: opt.title,
+        body: opt.description,
+        head: headBranch.name,
+        base: baseBranch.name,
+      })
+
+      return {
+        title: response.data.title,
+        url: response.data.html_url,
+      }
+    },
+  }
 
   readonly repos = {
     listByUser: async (user: User): Promise<Repository[]> => {
@@ -199,7 +276,7 @@ class GitApiImpl implements GitApi {
               defaultBranch:
                 (repo.size ?? 0) <= 0
                   ? // biome-ignore lint/style/noNonNullAssertion: <explanation>
-                    { name: repo.default_branch!, protected: false }
+                    { name: repo.default_branch!, protected: false, sha: undefined }
                   : // biome-ignore lint/style/noNonNullAssertion: <explanation>
                     await this.branch.get({ owner, name: repo.name }, repo.default_branch!),
               url: repo.url,

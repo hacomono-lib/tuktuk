@@ -26,11 +26,7 @@ export function toTokenFiles(variables: VariableSet[]): DesignTokenFile[] {
           name: collection.name,
           filename: `${collection.name}.json`,
           // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          contents: JSON.stringify(
-            { [collection.name]: toToken({ collection, variables: allVariables, mode: modes[0]! }) },
-            null,
-            2,
-          ),
+          contents: JSON.stringify(toToken({ collection, variables: allVariables, mode: modes[0]! }), null, 2),
         },
       ]
     }
@@ -38,7 +34,7 @@ export function toTokenFiles(variables: VariableSet[]): DesignTokenFile[] {
     return modes.map((mode) => ({
       name: `${collection.name}.${mode.name}`,
       filename: `${collection.name}.${mode.name}.json`,
-      tokens: { [collection.name]: toToken({ collection, variables: allVariables, mode }) },
+      tokens: toToken({ collection, variables: allVariables, mode }),
     }))
   })
 }

@@ -12,8 +12,7 @@ enum PageState {
   Unauthorized = 0,
   SelectRepo = 1,
   Review = 2,
-  CreatePr = 3,
-  Completed = 4,
+  Completed = 3,
 }
 
 export function Root() {
@@ -24,8 +23,6 @@ export function Root() {
   const [repo, setRepo] = useState<Repository | null>(null)
 
   const [pullRequest, setPullRequest] = useState<PullRequest | null>(null)
-
-  const [approved, setApproved] = useState(false)
 
   const signin = () => {
     // emit<CacheGitTokenHandler>(EventName.CacheGitToken, { provider: 'github', accessToken: gitApi.token })
@@ -43,14 +40,6 @@ export function Root() {
     setPullRequest(null)
   }
 
-  const approve = () => {
-    setApproved(true)
-  }
-
-  const backToReview = () => {
-    setApproved(false)
-  }
-
   const backToEdit = () => {
     setPullRequest(null)
   }
@@ -66,10 +55,6 @@ export function Root() {
 
     if (!pullRequest) {
       return PageState.Review
-    }
-
-    if (approved) {
-      return PageState.CreatePr
     }
 
     return PageState.Completed
@@ -93,8 +78,6 @@ export function Root() {
                 onSignOut={signout}
               />
             )
-          case PageState.CreatePr:
-            return <div> create pr </div>
           case PageState.Completed:
             return <div> Completed </div>
         }

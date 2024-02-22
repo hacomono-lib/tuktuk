@@ -42,5 +42,9 @@ SidebarLayout.MainContentBody = function Body({ children }: PropsWithChildren<Em
 }
 
 SidebarLayout.Footer = function Footer({ children }: PropsWithChildren<EmptyProps>) {
-  return <footer class="bg-white border-t border-t-gray-100 h-14">{children}</footer>
+  return (
+    <footer class="bg-white border-t border-t-gray-100 h-14 flex flex-row px-8 justify-between items-center">
+      {children}
+    </footer>
+  )
 }

@@ -1,5 +1,5 @@
 import { emit, on } from '@create-figma-plugin/utilities'
-import type { Branch, Repository } from '@tuktuk/core'
+import type { Branch, GitDesignTokenFile, Repository } from '@tuktuk/core'
 import { createTwoFilesPatch } from 'diff'
 import { useContext, useEffect, useMemo, useState } from 'preact/hooks'
 import {
@@ -59,7 +59,7 @@ export function loadFigmaFiles(): DesignTokenFile[] {
   return figmaFiles
 }
 
-export function toDiffSet(figmaFiles: DesignTokenFile[], gitFiles: DesignTokenFile[]): DesignTokenDiff[] {
+export function toDiffSet(figmaFiles: DesignTokenFile[], gitFiles: GitDesignTokenFile[]): DesignTokenDiff[] {
   return useMemo(() => {
     const diffSet = [] as Omit<DesignTokenDiff, 'diff'>[]
 

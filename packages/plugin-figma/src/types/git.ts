@@ -1,3 +1,5 @@
+import type { GitDesignTokenFile } from '@tuktuk/core'
+
 export interface DesignTokenFile {
   name: string
   filename: string
@@ -7,7 +9,7 @@ export interface DesignTokenFile {
 export interface DesignTokenDiff {
   name: string
   figma?: DesignTokenFile
-  git?: DesignTokenFile
+  git?: GitDesignTokenFile
   diff: string
 }
 

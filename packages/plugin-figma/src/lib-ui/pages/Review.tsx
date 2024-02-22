@@ -9,7 +9,7 @@ import { useState } from 'preact/hooks'
 // import { useState } from 'preact/hooks'
 import { type DesignTokenDiff, EventName, type ResizeWindowHandler } from '../../types'
 // import { loadFigmaFiles, loadGitFiles, toDiffSet } from '../hooks'
-import { Diff, FileList, ReviewHeader, SidebarLayout } from '../components'
+import { CreatePrModal, Diff, FileList, ReviewFooter, ReviewHeader, SidebarLayout } from '../components'
 import { loadFigmaFiles, loadGitFiles, toDiffSet } from '../hooks'
 
 const PAGE_HEIGHT = 800
@@ -24,7 +24,7 @@ interface ReviewProps {
   onSignOut: () => void
 }
 
-export function Review({ repo, onBack }: ReviewProps) {
+export function Review({ repo, onBack, onCreatedPullRequest }: ReviewProps) {
   const [baseDir, setBaseDir] = useState(DEFAULT_DIR)
 
   const [branch, setBranch] = useState<Branch>(repo.defaultBranch)
@@ -32,6 +32,8 @@ export function Review({ repo, onBack }: ReviewProps) {
   const { files: gitFiles, loading: loadingFiles } = loadGitFiles(repo, branch, baseDir)
 
   const figmaFiles = loadFigmaFiles()
+
+  const [modalOpen, setModalOpen] = useState(false)
 
   if (loadingFiles) {
     return <Loading />
@@ -70,7 +72,18 @@ export function Review({ repo, onBack }: ReviewProps) {
           </SidebarLayout.MainContentBody>
         </SidebarLayout.MainContent>
       </SidebarLayout>
-      <SidebarLayout.Footer>Footer</SidebarLayout.Footer>
+      <SidebarLayout.Footer>
+        <ReviewFooter onCancel={onBack} onCreatePullRequest={() => setModalOpen(true)} />
+      </SidebarLayout.Footer>
+      <CreatePrModal
+        open={modalOpen}
+        repo={repo}
+        diffs={diffSet}
+        baseDir={baseDir}
+        baseBranch={branch}
+        onClose={() => setModalOpen(false)}
+        onCreatedPullRequest={onCreatedPullRequest}
+      />
     </Fragment>
   )
 }

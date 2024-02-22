@@ -57,34 +57,43 @@ export interface Repository {
 export interface BranchApi {
   list(repo: Pick<Repository, 'owner' | 'name'>): Promise<Branch[]>
   get(repo: Pick<Repository, 'owner' | 'name'>, branchName: string): Promise<Branch>
-  create(repo: Pick<Repository, 'owner' | 'name'>, baseBranch: string, branchName: string): Promise<Branch>
+  create(repo: Pick<Repository, 'owner' | 'name'>, baseBranch: Branch, newBranchName: string): Promise<Branch>
 }
 
 export interface Branch {
   name: string
   protected?: boolean
+  sha?: string
 }
 
 export interface FileApi {
   listTokenFiles(repo: Repository, branch: string, dir: string): Promise<GitDesignTokenFile[]>
   getTokenFile(repo: Repository, branch: string, filepath: string): Promise<GitDesignTokenFile | null>
 
-  upsert(repo: Repository, branch: string, filename: string, content: string): Promise<void>
-  delete(repo: Repository, branch: string, filename: string): Promise<void>
+  create(repo: Repository, branch: Branch, filepath: string, content: string): Promise<void>
+  update(repo: Repository, branch: Branch, file: GitDesignTokenFile, content: string): Promise<void>
+  delete(repo: Repository, branch: Branch, file: GitDesignTokenFile): Promise<void>
 }
 
 export interface GitDesignTokenFile {
   filename: string
   name: string
+  sha?: string
   contents?: string
 }
 
+export interface CreatePrOptions {
+  title: string
+  description: string
+}
+
 export interface PullRequestApi {
-  create(title: string, description: string): Promise<PullRequest>
+  create(repo: Repository, headBranch: Branch, baseBranch: Branch, opt: CreatePrOptions): Promise<PullRequest>
 }
 
 export interface PullRequest {
-  id: string
+  title: string
+  url: string
 }
 
 export interface Organization {

@@ -125,7 +125,7 @@ export function SelectRepo({ onSelectedRepo }: Props) {
         />
         <VerticalSpace space="extraLarge" />
         <Button fullWidth={true} type="submit" disabled={selectedRepo === null}>
-          Select Repo
+          OK
         </Button>
       </form>
     </Container>

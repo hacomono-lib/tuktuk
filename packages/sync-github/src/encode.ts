@@ -2,7 +2,8 @@ type EncodingType = 'base64' | 'raw' | string
 
 export function encode(content: string, encoding: EncodingType): string {
   if (encoding === 'base64') {
-    return btoa(content)
+    // FIXME: unescape function is deprecated
+    return btoa(unescape(encodeURIComponent(content)))
   }
 
   if (encoding === 'raw') {
@@ -14,7 +15,8 @@ export function encode(content: string, encoding: EncodingType): string {
 
 export function decode(buffer: string, encoding: EncodingType): string {
   if (encoding === 'base64') {
-    return atob(buffer)
+    // FIXME: escape function is deprecated
+    return decodeURIComponent(escape(atob(buffer)))
   }
 
   if (encoding === 'raw') {
