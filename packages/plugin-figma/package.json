@@ -10,7 +10,8 @@
     "dev": "yarn fix:diff2html && yarn build:css && concurrently \"yarn dev:css\" \"yarn dev:js\"",
     "dev:css": "tailwindcss --input ./src/index.css --output ./build/index.css --watch",
     "dev:js": "build-figma-plugin --typecheck --watch",
-    "fix:diff2html": "mkdir -p build && cat ../../node_modules/diff2html/bundles/css/diff2html.min.css | sed 's/\\\\/\\\\\\\\/g' > ./build/diff2html.min.css"
+    "fix:diff2html": "mkdir -p build && cat ../../node_modules/diff2html/bundles/css/diff2html.min.css | sed 's/\\\\/\\\\\\\\/g' > ./build/diff2html.min.css",
+    "test:type": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@create-figma-plugin/ui": "^3.1.0",
@@ -39,9 +40,15 @@
     "editorType": [
       "figma"
     ],
-    "id": "tuktuk",
+    "id": "1342423902322188285",
     "name": "tuktuk",
     "main": "src/main.ts",
-    "ui": "src/ui.tsx"
+    "ui": "src/ui.tsx",
+    "networkAccess": {
+      "allowedDomains": [
+        "https://api.github.com",
+        "https://github.com"
+      ]
+    }
   }
 }

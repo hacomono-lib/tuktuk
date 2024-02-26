@@ -120,6 +120,6 @@ function completionDiff(diff: Omit<DesignTokenDiff, 'diff'>): DesignTokenDiff {
   const filename = `${diff.figma!.name}.json`
   return {
     ...diff,
-    diff: createTwoFilesPatch(filename, filename, diff.figma?.contents ?? '', diff.git?.contents ?? ''),
+    diff: createTwoFilesPatch(filename, filename, diff.git?.contents ?? '', diff.figma?.contents ?? ''),
   }
 }

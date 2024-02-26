@@ -20,7 +20,7 @@ function main() {
 
   on<RequestCachedGitTokenHandler>(EventName.RequestCachedGitToken, async (provider) => {
     const token = await getCachedGitToken(provider)
-    if (token === undefined) {
+    if (token !== undefined) {
       emit(EventName.CachedGitToken, token)
       return
     }

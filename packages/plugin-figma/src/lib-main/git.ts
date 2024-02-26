@@ -26,7 +26,5 @@ function getCacheKey(provider: Provider): string {
 }
 
 function isToken(token: unknown): token is CachedToken {
-  return (
-    typeof token === 'object' && token !== null && 'provider' in token && 'accessToken' in token && 'expiresAt' in token
-  )
+  return typeof token === 'object' && token !== null && 'provider' in token && 'accessToken' in token
 }
