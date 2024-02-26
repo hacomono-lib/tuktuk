@@ -19,7 +19,7 @@ interface Props {
   onSignOut: () => void
 }
 
-export function SelectRepo({ onSelectedRepo }: Props) {
+export function SelectRepos({ onSelectedRepo }: Props) {
   const gitApi = useContext(GitContext)
 
   emit<ResizeWindowHandler>(EventName.ResizeWindow, { height: PAGE_HEIGHT, width: PAGE_WIDTH })

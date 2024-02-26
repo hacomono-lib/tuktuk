@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    { "repo": "hacomono-lib/tuktuk" }
-  ],
+  "changelog": ["@changesets/changelog-github", { "repo": "hacomono-lib/tuktuk" }],
   "commit": false,
   "access": "restricted",
   "baseBranch": "main",

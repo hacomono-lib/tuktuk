@@ -6,7 +6,7 @@ import { useMemo, useState } from 'preact/hooks'
 import { Completed } from './Completed'
 // import { GitContext } from '../contexts'
 import { Review } from './Review'
-import { SelectRepo } from './SelectRepos'
+import { SelectRepos } from './SelectRepos'
 import { Unauthorized } from './Unauthorized'
 
 enum PageState {
@@ -68,7 +68,7 @@ export function Root() {
           case PageState.Unauthorized:
             return <Unauthorized onAuthorized={signin} />
           case PageState.SelectRepo:
-            return <SelectRepo onSelectedRepo={setRepo} onSignOut={signout} />
+            return <SelectRepos onSelectedRepo={setRepo} onSignOut={signout} />
           case PageState.Review:
             return (
               <Review
