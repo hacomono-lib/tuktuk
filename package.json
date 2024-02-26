@@ -10,12 +10,13 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "prepare": "turbo run prepare",
     "dev": "turbo run dev",
     "doc": "astro dev --root ./docs --open",
     "build": "turbo run build",
     "doc-build": "astro check --root ./docs && astro build --root ./docs",
     "test": "yarn test:type && yarn test:doc",
-    "test:type": "astro check test:type",
+    "test:type": "turbo run test:type",
     "test:doc": "astro check --root ./docs",
     "format": "biome format --write ./packages/*/src ./docs",
     "lint": "biome check --apply ./packages/*/src ./docs"

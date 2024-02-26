@@ -1,6 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
+    "prepare": {
+      "cache": true
+    },
     "dev": {
       "cache": true,
       "persistent": true,
@@ -8,11 +11,11 @@
     },
     "test": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["^prepare"]
     },
-    "typecheck": {
+    "test:type": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["^prepare"]
     },
     "build": {
       "cache": true,
