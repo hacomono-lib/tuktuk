@@ -25,7 +25,7 @@ export function Completed({ pullRequest, onBack }: Props) {
         <Bold>Review completed</Bold>
       </Text>
       <VerticalSpace space="extraLarge" />
-      <Text>Your design has been successfully delivered to the developers !</Text>
+      <Text>Your design has been successfully delivered to the developers!</Text>
       <Text>Share the URL of this Pull Request with the developers and ask them to review it.</Text>
       <VerticalSpace space="extraLarge" />
       <Textbox class="w-full" value={pullRequest.url} variant="border" />

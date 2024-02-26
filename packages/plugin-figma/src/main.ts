@@ -9,8 +9,6 @@ import {
   type ResizeWindowHandler,
 } from './types'
 
-console.clear()
-
 function main() {
   on<ResizeWindowHandler>(EventName.ResizeWindow, ({ width, height }) => figma.ui.resize(width, height))
 
