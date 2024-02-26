@@ -2,7 +2,6 @@ import { Bold, Container, SelectableItem, Text, VerticalSpace } from '@create-fi
 // biome-ignore lint/nursery/noUnusedImports: <explanation>
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { Fragment, type JSX, h } from 'preact'
-import { useMemo } from 'preact/hooks'
 import type { DesignTokenDiff } from '../../../types'
 
 export interface FileListProps {
@@ -49,13 +48,13 @@ function FileSelector({ file, selected, onSelect }: FileSelectorProps) {
   }
 
   // FIXME: リストの表示を変更する
-  const _shouldBeRemoved = useMemo(() => !file.figma && file.git, [file])
+  // const _shouldBeRemoved = useMemo(() => !file.figma && file.git, [file])
 
   // FIXME: リストの表示を変更する
-  const _shouldBeCreated = useMemo(() => file.figma && !file.git, [file])
+  // const _shouldBeCreated = useMemo(() => file.figma && !file.git, [file])
 
   // FIXME: リストの表示を変更する
-  const _shouldBeUpdated = useMemo(() => file.figma && file.git && hasDiff(file), [file])
+  // const _shouldBeUpdated = useMemo(() => file.figma && file.git && hasDiff(file), [file])
 
   return (
     <SelectableItem value={selected} onChange={handleChange}>
@@ -65,6 +64,6 @@ function FileSelector({ file, selected, onSelect }: FileSelectorProps) {
 }
 
 // FIXME: リストの表示を変更する
-function hasDiff(_diff: DesignTokenDiff): boolean {
-  return true
-}
+// function hasDiff(_diff: DesignTokenDiff): boolean {
+//   return true
+// }
