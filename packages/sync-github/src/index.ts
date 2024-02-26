@@ -1,4 +1,3 @@
-import { createOAuthDeviceAuth } from '@octokit/auth-oauth-device'
 import type {
   Branch,
   CreatePrOptions,
@@ -10,7 +9,6 @@ import type {
   User,
 } from '@tuktuk/core'
 import { Octokit, RequestError } from 'octokit'
-import { GITHUB_APP_CLIENT_ID } from './constants'
 import { decode, encode } from './encode'
 import { fixPath } from './path'
 
@@ -21,34 +19,15 @@ export function createApi(): GitApi {
 class GitApiImpl implements GitApi {
   #octokit = new Octokit()
 
+  // biome-ignore lint/nursery/useAwait: <explanation>
   async authorize(token?: string): Promise<void> {
     if (token) {
       this.#setToken(token)
       return
     }
 
-    console.log(location)
-
-    const auth = createOAuthDeviceAuth({
-      clientType: 'oauth-app',
-      clientId: GITHUB_APP_CLIENT_ID,
-      onVerification: (verification) => {
-        console.log(verification)
-      },
-      // request: request.defaults({
-      //   headers: {
-      //     'user-agent': `octokit-auth-oauth-device.js/${version} ${getUserAgent()}`,
-      //     origin: location.origin === 'null' ? location.ancestorOrigins[0] : location.origin,
-      //   },
-      // }),
-      // scopes: ['repo'],
-    })
-
-    const result = await auth({
-      type: 'oauth',
-    })
-
-    this.#setToken(result.token)
+    // TODO: Implement GitHub App authentication
+    throw new Error('GitHub App authentication is not implemented')
   }
 
   #setToken(token: string) {
