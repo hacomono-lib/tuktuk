@@ -17,15 +17,17 @@ export default defineConfig({
         {
           label: 'Introduction',
           collapsed: false,
-          items: [
-            { label: 'Getting Started', link: '/guides/start' },
-            { label: 'Concepts', link: '/guides/concepts' },
-          ],
+          autogenerate: { directory: '/guides', collapsed: false },
         },
         {
-          label: 'Reference',
+          label: 'Figma Plugin',
           collapsed: false,
-          autogenerate: { directory: '/reference', collapsed: false },
+          autogenerate: { directory: '/figma', collapsed: false },
+        },
+        {
+          label: 'GitHub',
+          collapsed: false,
+          autogenerate: { directory: '/github', collapsed: false },
         },
       ],
     }),

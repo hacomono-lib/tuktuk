@@ -5,6 +5,10 @@
       "path": ".."
     },
     {
+      "name": "#DOCUMENT",
+      "path": "../docs"
+    },
+    {
       "name": "plugin-figma",
       "path": "../packages/plugin-figma"
     },
