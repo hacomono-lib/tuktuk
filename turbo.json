@@ -1,0 +1,30 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "prepare": {
+      "cache": true
+    },
+    "dev": {
+      "cache": true,
+      "persistent": true,
+      "dependsOn": ["^dev"]
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": ["^prepare"]
+    },
+    "test:type": {
+      "cache": false,
+      "dependsOn": ["^prepare"]
+    },
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "package.json", "tsup.config.*", "vite.config.*", "tsconfig.*"],
+      "outputs": ["dist/**"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

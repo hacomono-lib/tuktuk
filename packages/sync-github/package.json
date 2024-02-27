@@ -1,0 +1,14 @@
+{
+  "name": "@tuktuk/sync-github",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "scripts": {
+    "test:type": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tuktuk/core": "0.0.0",
+    "octokit": "^3.1.2"
+  }
+}

@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html,
+  body,
+  #create-figma-plugin {
+    @apply w-full h-full overflow-hidden;
+  }
+
+  /**
+   * https://github.com/rtfpessoa/diff2html/issues/381
+   */
+  .d2h-wrapper {
+    transform: translateZ(0);
+  }
+
+  .d2h-diff-table {
+    position: relative;
+  }
+
+  .d2h-code-side-linenumber {
+    position: fixed;
+  }
+}

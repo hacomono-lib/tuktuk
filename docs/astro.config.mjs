@@ -1,13 +1,13 @@
 import starlight from '@astrojs/starlight'
-// eslint-disable-next-line import/extensions
 import { defineConfig } from 'astro/config'
 
+// biome-ignore lint/style/noDefaultExport: <explanation>
 export default defineConfig({
   integrations: [
     starlight({
-      title: 'json-reef',
+      title: 'tuktuk',
       social: {
-        github: 'https://github.com/hacomono-lib/json-reef',
+        github: 'https://github.com/hacomono-lib/tuktuk',
       },
       sidebar: [
         {
@@ -17,15 +17,17 @@ export default defineConfig({
         {
           label: 'Introduction',
           collapsed: false,
-          items: [
-            { label: 'Getting Started', link: '/guides/start' },
-            { label: 'Concepts', link: '/guides/concepts' },
-          ],
+          autogenerate: { directory: '/guides', collapsed: false },
         },
         {
-          label: 'Reference',
+          label: 'Figma Plugin',
           collapsed: false,
-          autogenerate: { directory: '/reference', collapsed: false },
+          autogenerate: { directory: '/figma', collapsed: false },
+        },
+        {
+          label: 'GitHub',
+          collapsed: false,
+          autogenerate: { directory: '/github', collapsed: false },
         },
       ],
     }),

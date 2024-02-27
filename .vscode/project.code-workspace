@@ -1,7 +1,24 @@
 {
   "folders": [
     {
+      "name": "#ROOT",
       "path": ".."
+    },
+    {
+      "name": "#DOCUMENT",
+      "path": "../docs"
+    },
+    {
+      "name": "plugin-figma",
+      "path": "../packages/plugin-figma"
+    },
+    {
+      "name": "sync-github",
+      "path": "../packages/sync-github"
+    },
+    {
+      "name": "core",
+      "path": "../packages/core"
     }
   ],
   "settings": {
@@ -22,9 +39,16 @@
     "editor.codeActionsOnSave": {
       "quickfix.biome": "explicit",
       "source.organizeImports.biome": "explicit"
-    }
+    },
+
+    "json.schemas": [
+      {
+        "fileMatch": ["../packages/plugin-figma/package.json"],
+        "url": "https://yuanqing.github.io/create-figma-plugin/figma-plugin.json"}
+    ]
   },
   "extensions": {
-    "recommendations": ["biomejs.biome", "ZixuanChen.vitest-explorer"]
+    "recommendations": ["biomejs.biome", "vitest.explorer", "bradlc.vscode-tailwindcss"],
+    "unwantedRecommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
   }
 }

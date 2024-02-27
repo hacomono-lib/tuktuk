@@ -1,0 +1,10 @@
+{
+  "name": "@tuktuk/core",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "scripts": {
+    "test:type": "tsc --noEmit -p tsconfig.json"
+  }
+}

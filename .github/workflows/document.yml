@@ -1,0 +1,48 @@
+---
+name: Deploy Document to GitHub Pages
+
+on:
+  push:
+    tags:
+      - "**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  init__node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/init-node
+
+  build-doc:
+    name: "Build Documents"
+    runs-on: ubuntu-latest
+    needs:
+      - init__node
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/init-node
+
+      - run: yarn doc-build
+        shell: bash
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./docs/dist"
+
+  deploy-doc:
+    needs: build-doc
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

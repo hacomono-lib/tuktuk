@@ -1,5 +1,6 @@
 {
   "name": "tuktuk",
+  "description": "A flexible framework for fetching design data and outputting it in various design token formats.",
   "private": true,
   "repository": {
     "url": "https://github.com/hacomono-lib/tuktuk",
@@ -9,29 +10,35 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "",
+    "prepare": "turbo run prepare --cache-dir=.turbo",
+    "dev": "turbo run dev",
     "doc": "astro dev --root ./docs --open",
-    "build": "",
-    "test": "",
+    "build": "turbo run build --cache-dir=.turbo",
+    "doc-build": "astro check --root ./docs && astro build --root ./docs",
+    "test": "yarn test:type && yarn test:doc",
+    "test:type": "turbo run test:type",
+    "test:doc": "astro check --root ./docs",
     "format": "biome format --write ./packages/*/src ./docs",
     "lint": "biome check --apply ./packages/*/src ./docs"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/starlight": "^0.15.3",
+    "@astrojs/check": "^0.5.5",
+    "@astrojs/starlight": "^0.20.1",
     "@biomejs/biome": "^1.5.1",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
-    "astro": "^4.1.2",
+    "astro": "^4.4.4",
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "plugins/*",
+    "examples/*"
   ],
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.1.0",
   "volta": {
     "node": "20.11.0",
-    "yarn": "4.0.2"
+    "yarn": "4.1.0"
   }
 }
