@@ -10,10 +10,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prepare": "turbo run prepare",
+    "prepare": "turbo run prepare --cache-dir=.turbo",
     "dev": "turbo run dev",
     "doc": "astro dev --root ./docs --open",
-    "build": "turbo run build",
+    "build": "turbo run build --cache-dir=.turbo",
     "doc-build": "astro check --root ./docs && astro build --root ./docs",
     "test": "yarn test:type && yarn test:doc",
     "test:type": "turbo run test:type",

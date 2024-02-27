@@ -6,16 +6,24 @@ runs:
   using: 'composite'
 
   steps:
-    - name: cache and restore "figma plugin build result"
-      id: cache_figma_build_results
+    - name: cache turborepo
       uses: actions/cache@v4
       with:
         path: |
-          ./packages/plugin-figma/build
-          ./packages/plugin-figma/manifest.json
-        key: cache-build-results-${{ runner.os }}-${{ hashFiles('yarn.lock', './packages/plugin-figma/**/*.ts', './packages/plugin-figma/**/*.tsx', './packages/sync-*/**/*.ts', './packages/core/**/*.ts') }}
+          .turbo
+        key: ${{ runner.os }}-turbo-${{ github.sha }}
         restore-keys: |
-          cache-build-results-${{ runner.os }}-${{ hashFiles('yarn.lock', './packages/plugin-figma/**/*.ts', './packages/plugin-figma/**/*.tsx', './packages/sync-*/**/*.ts', './packages/core/**/*.ts') }}
+          ${{ runner.os }}-turbo-
+
+    - name: cache and restore "build result"
+      id: cache_build_results
+      uses: actions/cache@v4
+      with:
+        path: |
+          ./**/build
+        key: cache-build-results-${{ runner.os }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.css', '**/package.json', 'yarn.lock') }}
+        restore-keys: |
+          cache-build-results-${{ runner.os }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.css', '**/package.json', 'yarn.lock') }}
           cache-build-results-${{ runner.os }}-
           cache-build-results--
 
