@@ -2572,9 +2572,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^4.4.9":
-  version: 4.4.9
-  resolution: "astro@npm:4.4.9"
+"astro@npm:^4.4.10":
+  version: 4.4.10
+  resolution: "astro@npm:4.4.10"
   dependencies:
     "@astrojs/compiler": "npm:^2.5.3"
     "@astrojs/internal-helpers": "npm:0.2.1"
@@ -2646,7 +2646,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/466de719b5813dcdc72e137a824f40625bfc31644d9f74a3b71b8c9a9cc1aae6c45b9451f4fe885615d8cc299b327385591781d1c910d70a4718c3e9e7ce1395
+  checksum: 10c0/150dcf6af46ace5a557947797cc27df440d89d4e7615fd64a7b4593f506240636c2abc97efeb64b253c141980e61cbd775a093e06127463407f9d1a42ccfffad
   languageName: node
   linkType: hard
 
@@ -9668,7 +9668,7 @@ __metadata:
     "@biomejs/biome": "npm:^1.5.3"
     "@changesets/changelog-github": "npm:^0.5.0"
     "@changesets/cli": "npm:^2.27.1"
-    astro: "npm:^4.4.9"
+    astro: "npm:^4.4.10"
     turbo: "npm:^1.11.3"
     typescript: "npm:^5.3.3"
   languageName: unknown
