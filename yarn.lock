@@ -1974,7 +1974,7 @@ __metadata:
     diff: "npm:^5.2.0"
     diff2html: "npm:^3.4.47"
     json-origami: "npm:^0.5.2"
-    lucide-preact: "npm:^0.330.0"
+    lucide-preact: "npm:^0.344.0"
     ofetch: "npm:^1.3.3"
     preact: "npm:^10.19.6"
     tailwindcss: "npm:^3.4.1"
@@ -5970,12 +5970,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-preact@npm:^0.330.0":
-  version: 0.330.0
-  resolution: "lucide-preact@npm:0.330.0"
+"lucide-preact@npm:^0.344.0":
+  version: 0.344.0
+  resolution: "lucide-preact@npm:0.344.0"
   peerDependencies:
     preact: ^10.5.13
-  checksum: 10c0/e9f6b87166d6a0a82b04ca41754ee258ffcb121ad9dc90b426cdebc19fff5db69a23bd9ef066544b9e8cee5be572cdebebcf1b63bcd3fe4be262763d6f6d29f5
+  checksum: 10c0/b431d472da4ff14b6cebf1873ead35234445f6aaf7e4b46715476664b070f0f67d31cfbb8fbc63276edfc9c97f60a4b778bb5ed8b34dbc0fc493987f8c7fc5dc
   languageName: node
   linkType: hard
 
