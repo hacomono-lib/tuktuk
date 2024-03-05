@@ -1,6 +1,7 @@
 {
   "name": "@tuktuk/plugin-figma",
   "version": "0.0.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "prepare": "yarn build:css",
