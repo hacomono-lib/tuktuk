@@ -2772,9 +2772,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^4.4.10":
-  version: 4.4.10
-  resolution: "astro@npm:4.4.10"
+"astro@npm:^4.4.11":
+  version: 4.4.11
+  resolution: "astro@npm:4.4.11"
   dependencies:
     "@astrojs/compiler": "npm:^2.5.3"
     "@astrojs/internal-helpers": "npm:0.2.1"
@@ -2846,7 +2846,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/150dcf6af46ace5a557947797cc27df440d89d4e7615fd64a7b4593f506240636c2abc97efeb64b253c141980e61cbd775a093e06127463407f9d1a42ccfffad
+  checksum: 10c0/0e3eb52f754bf5867fc14f11b83ea4ac30d737891856d349b4e23e159ac5c2360c8f71c3a25ee8af18932024f9846075d8fc60365ff0350aaccfdf661ee18ef1
   languageName: node
   linkType: hard
 
@@ -10259,7 +10259,7 @@ __metadata:
     "@changesets/cli": "npm:^2.27.1"
     "@vitest/coverage-v8": "npm:^1.3.1"
     "@vitest/ui": "npm:^1.3.1"
-    astro: "npm:^4.4.10"
+    astro: "npm:^4.4.11"
     turbo: "npm:^1.11.3"
     typescript: "npm:^5.3.3"
     vitest: "npm:^1.3.1"
