@@ -18,7 +18,7 @@
     "@create-figma-plugin/ui": "^3.1.0",
     "@create-figma-plugin/utilities": "^3.1.0",
     "@preact/signals": "^1.2.3",
-    "@supercharge/promise-pool": "^3.1.1",
+    "@supercharge/promise-pool": "^3.2.0",
     "@tuktuk/core": "0.0.0",
     "@tuktuk/sync-github": "0.0.0",
     "@types/diff": "^5.0.9",
