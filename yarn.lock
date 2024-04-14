@@ -170,9 +170,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/starlight@npm:^0.21.4":
-  version: 0.21.4
-  resolution: "@astrojs/starlight@npm:0.21.4"
+"@astrojs/starlight@npm:^0.21.5":
+  version: 0.21.5
+  resolution: "@astrojs/starlight@npm:0.21.5"
   dependencies:
     "@astrojs/mdx": "npm:^2.1.1"
     "@astrojs/sitemap": "npm:^3.0.5"
@@ -195,7 +195,7 @@ __metadata:
     vfile: "npm:^6.0.1"
   peerDependencies:
     astro: ^4.2.7
-  checksum: 10c0/5be999f15e8c31297a8c6c70da867f1bc4b51a81ca0bb39f52301ad5857a2b9ecc651f4f4985c7a73f4ecf0c8674cff3cb72b552ad4ad264e7010dfcc88e207a
+  checksum: 10c0/5daa4803e5426be7ca9c11bf78d819f287ac40b94bfd1aa183f7b706a0748d9c611dfae085e88b72feb32256f6b4d7932a60439bdbc526b934d20aa5aa237e58
   languageName: node
   linkType: hard
 
@@ -10252,7 +10252,7 @@ __metadata:
   resolution: "tuktuk@workspace:."
   dependencies:
     "@astrojs/check": "npm:^0.5.10"
-    "@astrojs/starlight": "npm:^0.21.4"
+    "@astrojs/starlight": "npm:^0.21.5"
     "@biomejs/biome": "npm:^1.5.3"
     "@changesets/changelog-github": "npm:^0.5.0"
     "@changesets/cli": "npm:^2.27.1"
