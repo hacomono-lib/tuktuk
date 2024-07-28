@@ -1876,21 +1876,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@preact/signals-core@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@preact/signals-core@npm:1.6.0"
-  checksum: 10c0/5e32a98ab248a15e1950ac23dae9cb985c9bdc0ff2f24dbdcccc235eeacd175170852107f5d1e4a7250805eb90cb642510855acd91788ebe95ff9b24bf88689d
+"@preact/signals-core@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@preact/signals-core@npm:1.7.0"
+  checksum: 10c0/f5eef567368ed26e68eb1456e190961b3e49fe6920dca05cfdf9073788887ceb33b419b653037b6c27db7a0a8d8fe3dc09c16ae711b5b391602980c4bfd426a3
   languageName: node
   linkType: hard
 
-"@preact/signals@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@preact/signals@npm:1.2.3"
+"@preact/signals@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@preact/signals@npm:1.3.0"
   dependencies:
-    "@preact/signals-core": "npm:^1.6.0"
+    "@preact/signals-core": "npm:^1.7.0"
   peerDependencies:
     preact: 10.x
-  checksum: 10c0/735be6fe6f6ff1a5a5921745e7fb5ec5e573d43a0b3ed8f24ee01b34da308ccbb8d38cbcd431f6cb4b48895a3008080be08baa505b3c18ede631b455dfe17739
+  checksum: 10c0/b8c5ab4801273214469270d8f61b099900eaea84601bcfb457dc488db41758e9a69eaad82f32db02f0b8d42fd9444242a823d73128b74471f2fe750ba4303155
   languageName: node
   linkType: hard
 
@@ -2054,7 +2054,7 @@ __metadata:
     "@create-figma-plugin/ui": "npm:^3.1.0"
     "@create-figma-plugin/utilities": "npm:^3.1.0"
     "@figma/plugin-typings": "npm:^1.88.0"
-    "@preact/signals": "npm:^1.2.3"
+    "@preact/signals": "npm:^1.3.0"
     "@supercharge/promise-pool": "npm:^3.1.1"
     "@tuktuk/core": "npm:0.0.0"
     "@tuktuk/sync-github": "npm:0.0.0"
