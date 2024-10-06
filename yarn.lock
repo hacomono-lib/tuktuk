@@ -2051,7 +2051,7 @@ __metadata:
     json-origami: "npm:^0.5.2"
     lucide-preact: "npm:^0.344.0"
     ofetch: "npm:^1.3.4"
-    preact: "npm:^10.20.2"
+    preact: "npm:^10.24.2"
     tailwindcss: "npm:^3.4.13"
     typescript: "npm:^5.3.3"
   languageName: unknown
@@ -7910,10 +7910,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.20.2":
-  version: 10.20.2
-  resolution: "preact@npm:10.20.2"
-  checksum: 10c0/e79c1e3ab0bab6a08dce157fc33a537487365a9093bcdc1a60612be8073a354e84648df9ee1eef5306b640461c99c9ef024720405e3e8219c03ed17e95de981e
+"preact@npm:^10.24.2":
+  version: 10.24.2
+  resolution: "preact@npm:10.24.2"
+  checksum: 10c0/d1d22c5e1abc10eb8f83501857ef22c54a3fda2d20449d06f5b3c7d5ae812bd702c16c05b672138b8906504f9c893e072e9cebcbcada8cac320edf36265788fb
   languageName: node
   linkType: hard
 
