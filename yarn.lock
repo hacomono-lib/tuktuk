@@ -2613,7 +2613,7 @@ __metadata:
     concurrently: "npm:^8.2.2"
     diff: "npm:^5.2.0"
     diff2html: "npm:^3.4.51"
-    json-origami: "npm:^0.5.2"
+    json-origami: "npm:^0.6.1"
     lucide-preact: "npm:^0.344.0"
     ofetch: "npm:^1.3.4"
     preact: "npm:^10.20.2"
@@ -6112,15 +6112,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-origami@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "json-origami@npm:0.5.2"
+"json-origami@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "json-origami@npm:0.6.1"
   peerDependencies:
     typescript: ">= 4.0.0"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/30ff2817a7fb9efedec2c439118d48a4759cc93e16607b5456aa5717ea8bb9c481b0d8698686476c2d0aeb04e122d4ef5f157e842990e58339c7d0cb7ab8ea71
+  checksum: 10c0/d4b8ce08ccd691daf30a42027b3a504a1238c355b2c5bd8c2faf005959460c606f0baa713b5a6014c10c73ce1047c44a4ef79f98a04b6040e50c41ae5ac1736d
   languageName: node
   linkType: hard
 
