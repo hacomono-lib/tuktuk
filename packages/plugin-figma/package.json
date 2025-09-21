@@ -26,7 +26,7 @@
     "diff2html": "^3.4.52",
     "json-origami": "^0.5.2",
     "lucide-preact": "^0.344.0",
-    "ofetch": "^1.3.4",
+    "ofetch": "^1.4.1",
     "preact": "^10.20.2"
   },
   "devDependencies": {
