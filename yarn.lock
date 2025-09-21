@@ -902,10 +902,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@create-figma-plugin/tsconfig@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@create-figma-plugin/tsconfig@npm:3.1.0"
-  checksum: 10c0/aed6ecd230bc73f19ff235f61a490ad215022a1c4b841495fbdc6652ece43e25615530e9f3f69c334318b1efd2589a3848b79c723897d7519cc14dba3e6aa8a7
+"@create-figma-plugin/tsconfig@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@create-figma-plugin/tsconfig@npm:4.0.3"
+  checksum: 10c0/15a6bcfe8c536c50f718207dde78010a37ae6dd6175c5b5b762420d10107e81f847cb86c4f9d8ab7dfcbdd051900e87bbb9b8a1f72333682b2844bd3f39dc052
   languageName: node
   linkType: hard
 
@@ -2601,7 +2601,7 @@ __metadata:
   resolution: "@tuktuk/plugin-figma@workspace:packages/plugin-figma"
   dependencies:
     "@create-figma-plugin/build": "npm:^3.1.0"
-    "@create-figma-plugin/tsconfig": "npm:^3.1.0"
+    "@create-figma-plugin/tsconfig": "npm:^4.0.3"
     "@create-figma-plugin/ui": "npm:^3.1.0"
     "@create-figma-plugin/utilities": "npm:^3.1.0"
     "@figma/plugin-typings": "npm:^1.88.0"
