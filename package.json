@@ -41,9 +41,9 @@
     "plugins/*",
     "examples/*"
   ],
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.10.0",
   "volta": {
     "node": "22.11.0",
-    "yarn": "4.1.1"
+    "yarn": "4.10.0"
   }
 }
