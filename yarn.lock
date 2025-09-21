@@ -3300,7 +3300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^4.16.18":
+"astro@npm:^4.16.19":
   version: 4.16.19
   resolution: "astro@npm:4.16.19"
   dependencies:
@@ -10086,7 +10086,7 @@ __metadata:
     "@changesets/cli": "npm:^2.27.12"
     "@vitest/coverage-v8": "npm:^1.3.1"
     "@vitest/ui": "npm:^1.3.1"
-    astro: "npm:^4.16.18"
+    astro: "npm:^4.16.19"
     turbo: "npm:^1.11.3"
     typescript: "npm:^5.3.3"
     vitest: "npm:^1.3.1"
