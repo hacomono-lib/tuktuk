@@ -2615,7 +2615,7 @@ __metadata:
     diff2html: "npm:^3.4.51"
     json-origami: "npm:^0.5.2"
     lucide-preact: "npm:^0.344.0"
-    ofetch: "npm:^1.3.4"
+    ofetch: "npm:^1.4.1"
     preact: "npm:^10.20.2"
     tailwindcss: "npm:^3.4.17"
     typescript: "npm:^5.3.3"
@@ -7517,10 +7517,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch-native@npm:^1.6.3":
-  version: 1.6.4
-  resolution: "node-fetch-native@npm:1.6.4"
-  checksum: 10c0/78334dc6def5d1d95cfe87b33ac76c4833592c5eb84779ad2b0c23c689f9dd5d1cfc827035ada72d6b8b218f717798968c5a99aeff0a1a8bf06657e80592f9c3
+"node-fetch-native@npm:^1.6.4":
+  version: 1.6.7
+  resolution: "node-fetch-native@npm:1.6.7"
+  checksum: 10c0/8b748300fb053d21ca4d3db9c3ff52593d5e8f8a2d9fe90cbfad159676e324b954fdaefab46aeca007b5b9edab3d150021c4846444e4e8ab1f4e44cd3807be87
   languageName: node
   linkType: hard
 
@@ -7658,14 +7658,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ofetch@npm:^1.3.4":
-  version: 1.3.4
-  resolution: "ofetch@npm:1.3.4"
+"ofetch@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "ofetch@npm:1.4.1"
   dependencies:
     destr: "npm:^2.0.3"
-    node-fetch-native: "npm:^1.6.3"
-    ufo: "npm:^1.5.3"
-  checksum: 10c0/39855005c3f8aa11c11d3a3b0c4366b67d316da58633f4cf5d4a5af0a61495fd68699f355e70deda70355ead25f27b41c3bde2fdd1d24ce3f85ac79608dd8677
+    node-fetch-native: "npm:^1.6.4"
+    ufo: "npm:^1.5.4"
+  checksum: 10c0/fd712e84058ad5058a5880fe805e9bb1c2084fb7f9c54afa99a2c7e84065589b4312fa6e2dcca4432865e44ad1ec13fcd055c1bf7977ced838577a45689a04fa
   languageName: node
   linkType: hard
 
@@ -10258,10 +10258,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ufo@npm:^1.5.3":
-  version: 1.5.3
-  resolution: "ufo@npm:1.5.3"
-  checksum: 10c0/1df10702582aa74f4deac4486ecdfd660e74be057355f1afb6adfa14243476cf3d3acff734ccc3d0b74e9bfdefe91d578f3edbbb0a5b2430fe93cd672370e024
+"ufo@npm:^1.5.4":
+  version: 1.6.1
+  resolution: "ufo@npm:1.6.1"
+  checksum: 10c0/5a9f041e5945fba7c189d5410508cbcbefef80b253ed29aa2e1f8a2b86f4bd51af44ee18d4485e6d3468c92be9bf4a42e3a2b72dcaf27ce39ce947ec994f1e6b
   languageName: node
   linkType: hard
 
