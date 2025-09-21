@@ -1492,10 +1492,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@figma/plugin-typings@npm:^1.88.0":
-  version: 1.88.0
-  resolution: "@figma/plugin-typings@npm:1.88.0"
-  checksum: 10c0/79994252eaf1465770c18f269742e1973fba5aaf2cc58d3e70423126912cd27d4328c54a77bab92f0293ebf1ac37a98f2e3ed86f4005e3b6e4b57df9342f00c3
+"@figma/plugin-typings@npm:^1.117.0":
+  version: 1.117.0
+  resolution: "@figma/plugin-typings@npm:1.117.0"
+  checksum: 10c0/e3263e3de1b4a0632f0c88323024a20b0ba607aa16288fdc48e9d51d4653563e96e23d312200564fcb31afd8f2c68123395e5624aed53c76f163b83d34127d5e
   languageName: node
   linkType: hard
 
@@ -2604,7 +2604,7 @@ __metadata:
     "@create-figma-plugin/tsconfig": "npm:^3.1.0"
     "@create-figma-plugin/ui": "npm:^3.1.0"
     "@create-figma-plugin/utilities": "npm:^3.1.0"
-    "@figma/plugin-typings": "npm:^1.88.0"
+    "@figma/plugin-typings": "npm:^1.117.0"
     "@preact/signals": "npm:^1.2.3"
     "@supercharge/promise-pool": "npm:^3.1.1"
     "@tuktuk/core": "npm:0.0.0"
