@@ -2576,10 +2576,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supercharge/promise-pool@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@supercharge/promise-pool@npm:3.1.1"
-  checksum: 10c0/03897f585cb9d0f528440f00b43d75d6d0b694243f0458c78a758be4002214370937fbc05717ee033784b9a689cf83107ad3466c9d5e8640066a3b3d105c41ec
+"@supercharge/promise-pool@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@supercharge/promise-pool@npm:3.2.0"
+  checksum: 10c0/450e2afb21b41f98184ce23210d394a9d825c7ad7b3d2e23d6181c70c5f651ba7aab6b0e90743f3b47d83f401d829ee8cdf0423f97f000452a65c117e1165bdf
   languageName: node
   linkType: hard
 
@@ -2606,7 +2606,7 @@ __metadata:
     "@create-figma-plugin/utilities": "npm:^3.1.0"
     "@figma/plugin-typings": "npm:^1.88.0"
     "@preact/signals": "npm:^1.2.3"
-    "@supercharge/promise-pool": "npm:^3.1.1"
+    "@supercharge/promise-pool": "npm:^3.2.0"
     "@tuktuk/core": "npm:0.0.0"
     "@tuktuk/sync-github": "npm:0.0.0"
     "@types/diff": "npm:^5.0.9"
