@@ -909,14 +909,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@create-figma-plugin/ui@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@create-figma-plugin/ui@npm:3.1.0"
+"@create-figma-plugin/ui@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@create-figma-plugin/ui@npm:4.0.3"
   dependencies:
-    "@create-figma-plugin/utilities": "npm:^3.1.0"
+    "@create-figma-plugin/utilities": "npm:^4.0.3"
   peerDependencies:
     preact: ">=10"
-  checksum: 10c0/0e67226ebff0d0e06a15a53d9726e29f43d0b2fb1f17ecbb5cc153b4a520581a6690052c991de52c75ee4e116d7176a05d223923fbf46edce019cd73ff96fc71
+  checksum: 10c0/dabfb8f67a7196247982121a6938e3c7000dc281b393a415ec50859c5d9ceebd60b265a0756618489fb46cac5b6d87aa13bab1035e7b5c94dffd9515ba83596b
   languageName: node
   linkType: hard
 
@@ -928,6 +928,17 @@ __metadata:
     natural-compare-lite: "npm:1.4.0"
     rgb-hex: "npm:^4.1.0"
   checksum: 10c0/8de238e9d23e4b2bdc9791bbfa01a119375891b1b8ce01e2cf3310e25b91a6e23a871c2779b313078a60ba765e0d4b4b0b405c7e00187a106956232bdd13e6ca
+  languageName: node
+  linkType: hard
+
+"@create-figma-plugin/utilities@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@create-figma-plugin/utilities@npm:4.0.3"
+  dependencies:
+    hex-rgb: "npm:^5.0.0"
+    natural-compare-lite: "npm:1.4.0"
+    rgb-hex: "npm:^4.1.0"
+  checksum: 10c0/3ec078b5d01374628e43b4c60d0689caa477f19f4aff31379e5cb26965f91f99a9bd767d0d17d6f3f349a102b7cb4fc60de295cd4243329510ba8f59b0864308
   languageName: node
   linkType: hard
 
@@ -2602,7 +2613,7 @@ __metadata:
   dependencies:
     "@create-figma-plugin/build": "npm:^3.1.0"
     "@create-figma-plugin/tsconfig": "npm:^3.1.0"
-    "@create-figma-plugin/ui": "npm:^3.1.0"
+    "@create-figma-plugin/ui": "npm:^4.0.3"
     "@create-figma-plugin/utilities": "npm:^3.1.0"
     "@figma/plugin-typings": "npm:^1.88.0"
     "@preact/signals": "npm:^1.2.3"
